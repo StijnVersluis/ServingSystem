@@ -1,0 +1,5 @@
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.csproj.AssemblyReference.cache
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.AssemblyInfoInputs.cache
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.AssemblyInfo.cs
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.csproj.CoreCompileInputs.cache

@@ -1,0 +1,15 @@
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\BusinessLayer.deps.json
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\BusinessLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\ref\BusinessLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\BusinessLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\InterfaceLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\InterfaceLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.csproj.AssemblyReference.cache
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.AssemblyInfoInputs.cache
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.AssemblyInfo.cs
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.csproj.CopyComplete
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\ref\BusinessLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\BusinessLayer.pdb
