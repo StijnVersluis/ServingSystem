@@ -1,12 +1,14 @@
-﻿using System;
+﻿using InterfaceLayer.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer
+namespace InterfaceLayer
 {
-    public class OrderContainer
+    public interface IOrderContainer
     {
+
     }
 }

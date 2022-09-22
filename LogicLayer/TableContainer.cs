@@ -16,9 +16,7 @@ namespace BusinessLayer
         }
         public List<Table> GetAll()
         {
-            var li = new List<Table>();
-            iTableContainer.GetAll().ForEach(table => li.Add(new Table(table)));
-            return li;
+            return iTableContainer.GetAll().ConvertAll(x=>new Table(x));
         }
 
         public Table GetTable(int id)

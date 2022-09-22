@@ -10,44 +10,68 @@ namespace BusinessLayer
 {
     public class Table
     {
-        private ITable itable;
         public int Id { private set; get; }
         public string Name { private set; get; }
 
-        public Table(int id, string name)
+        private ITable iTable;
+
+        public Table(ITable itable, int id, string name)
         {
+            iTable = itable;
             Id = id;
             Name = name;
         }
+
         public Table(TableDTO table)
         {
             Id = table.Id;
             Name = table.Name;
         }
-        public List<Product> GetProducts()
+
+        /// <summary>
+        /// Get all the orders from Table.
+        /// </summary>
+        /// <returns>A List of Orders<returns>
+        public List<Order> GetOrders()
         {
-            var products = new List<Product>();
-            itable.GetProducts().ForEach(product => products.Add(new Product(product)));
-            return products;
-        }
-        public double GetTotalPrice()
-        {
-            return itable.GetTotalPrice();
+            return iTable.GetOrders().ConvertAll(x => new Order(x));
         }
 
-        /// public bool EditOrder(int productId, int newAmount)
-        /// {
-        ///     if (newAmount > 0) GetOrder(this.Id, productId).Edit(ProductId, newAmount)
-        ///     else GetOrder(this.Id, productId).Remove();
-        /// }
-        
+        /// <summary>
+        /// Get the total price of all orders from the table.
+        /// </summary>
+        /// <returns>A double with the total price of the items ordered.</returns>
+        public double GetTotalPrice()
+        {
+            return iTable.GetTotalPrice();
+        }
+
+        ///<summary>
+        /// Create order and add to table.
+        /// </summary>
+        /// <param name="staffId">The id of the staff member logged in.</param>
+        /// <returns>The newly created order.</returns>
+        public Order CreateOrder(int staffId)
+        {
+            return new Order(iTable.CreateOrder(this.Id, staffId));
+        }
+
+        ///<summary>
+        /// Edit Table in database
+        /// </summary>
+        /// <returns>The recently edited Table</returns>
         public Table Edit(string name)
         {
-            return new Table(itable.Edit(new TableDTO(this.Id, name)));
+            return new Table(iTable.Edit(new TableDTO(this.Id, name)));
         }
+
+        ///<summary>
+        /// Remove Table from database
+        /// </summary>
+        /// <returns>True or false based on if it has been successful</returns>
         public bool Remove()
         {
-            return itable.Remove(new TableDTO(this.Id, this.Name));
+            return iTable.Remove(new TableDTO(this.Id, this.Name));
         }
     }
 }
