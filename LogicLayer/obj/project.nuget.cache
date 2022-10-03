@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IRBxp++eWCiJkOVIGvVlcpOQRrxB7gLUJWhB3OQ5LQxl5Iuos/gyqa8zyun1kWetss+3RDzky+ahBdJxQ145Fg==",
+  "dgSpecHash": "JoHXDf4SOiHiwY9JC6YbONREkm4tvMoZziLsyaXMdUntSyLCga2DLzTKFBUWfhYFefzlPBsOP2c+jcwBfIVi/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj",
+  "projectFilePath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

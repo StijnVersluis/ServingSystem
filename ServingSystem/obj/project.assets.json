@@ -18,10 +18,14 @@
           "System.Security.Principal.Windows": "4.7.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/_._": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Win32.Registry.dll": {}
+          "lib/netstandard2.0/Microsoft.Win32.Registry.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard2.0/Microsoft.Win32.Registry.dll": {
@@ -77,10 +81,14 @@
           "runtime.native.System.Data.SqlClient.sni": "4.7.0"
         },
         "compile": {
-          "ref/netcoreapp2.1/System.Data.SqlClient.dll": {}
+          "ref/netcoreapp2.1/System.Data.SqlClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netcoreapp2.1/System.Data.SqlClient.dll": {}
+          "lib/netcoreapp2.1/System.Data.SqlClient.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll": {
@@ -100,10 +108,14 @@
           "System.Security.Principal.Windows": "4.7.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "ref/netstandard2.0/_._": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/System.Security.AccessControl.dll": {}
+          "lib/netstandard2.0/System.Security.AccessControl.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/netcoreapp2.0/System.Security.AccessControl.dll": {
@@ -115,10 +127,14 @@
       "System.Security.Principal.Windows/4.7.0": {
         "type": "package",
         "compile": {
-          "ref/netcoreapp3.0/_._": {}
+          "ref/netcoreapp3.0/_._": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/System.Security.Principal.Windows.dll": {}
+          "lib/netstandard2.0/System.Security.Principal.Windows.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netcoreapp2.1/System.Security.Principal.Windows.dll": {
@@ -129,19 +145,6 @@
             "assetType": "runtime",
             "rid": "win"
           }
-        }
-      },
-      "BusinessLayer/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "InterfaceLayer": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/BusinessLayer.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BusinessLayer.dll": {}
         }
       },
       "DataLayer/1.0.0": {
@@ -166,6 +169,19 @@
         },
         "runtime": {
           "bin/placeholder/InterfaceLayer.dll": {}
+        }
+      },
+      "LogicLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "InterfaceLayer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LogicLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LogicLayer.dll": {}
         }
       }
     }
@@ -484,11 +500,6 @@
         "version.txt"
       ]
     },
-    "BusinessLayer/1.0.0": {
-      "type": "project",
-      "path": "../LogicLayer/BusinessLayer.csproj",
-      "msbuildProject": "../LogicLayer/BusinessLayer.csproj"
-    },
     "DataLayer/1.0.0": {
       "type": "project",
       "path": "../DataLayer/DataLayer.csproj",
@@ -498,12 +509,17 @@
       "type": "project",
       "path": "../InterfaceLayer/InterfaceLayer.csproj",
       "msbuildProject": "../InterfaceLayer/InterfaceLayer.csproj"
+    },
+    "LogicLayer/1.0.0": {
+      "type": "project",
+      "path": "../LogicLayer/LogicLayer.csproj",
+      "msbuildProject": "../LogicLayer/LogicLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "BusinessLayer >= 1.0.0",
-      "DataLayer >= 1.0.0"
+      "DataLayer >= 1.0.0",
+      "LogicLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -541,8 +557,8 @@
             "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj": {
               "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj"
             },
-            "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj": {
-              "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj"
+            "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
+              "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj"
             }
           }
         }
@@ -562,10 +578,17 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[5.0.17, 5.0.17]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -574,7 +597,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

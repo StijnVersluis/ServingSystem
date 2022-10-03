@@ -3,3 +3,13 @@ C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.G
 C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.AssemblyInfoInputs.cache
 C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.AssemblyInfo.cs
 C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.csproj.CoreCompileInputs.cache
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\DataLayer.deps.json
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\DataLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\ref\DataLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\DataLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\InterfaceLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\bin\Debug\net5.0\InterfaceLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.csproj.CopyComplete
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\ref\DataLayer.dll
+C:\Users\stijn\source\repos\ServingSystem\DataLayer\obj\Debug\net5.0\DataLayer.pdb

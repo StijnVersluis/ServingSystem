@@ -59,7 +59,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -68,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -117,7 +118,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -126,16 +128,16 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj": {
+    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj",
-        "projectName": "BusinessLayer",
-        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
+        "projectName": "LogicLayer",
+        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
         "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\obj\\",
         "projectStyle": "PackageReference",
@@ -179,7 +181,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -188,7 +191,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -223,8 +226,8 @@
               "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj": {
                 "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj"
               },
-              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj": {
-                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\BusinessLayer.csproj"
+              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
+                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj"
               }
             }
           }
@@ -244,10 +247,17 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.17, 5.0.17]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -256,7 +266,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

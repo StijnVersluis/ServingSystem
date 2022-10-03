@@ -8,23 +8,23 @@
     ".NETCoreApp,Version=v5.0": {
       "ConsoleApp1/1.0.0": {
         "dependencies": {
-          "BusinessLayer": "1.0.0"
+          "LogicLayer": "1.0.0"
         },
         "runtime": {
           "ConsoleApp1.dll": {}
         }
       },
-      "BusinessLayer/1.0.0": {
+      "InterfaceLayer/1.0.0": {
+        "runtime": {
+          "InterfaceLayer.dll": {}
+        }
+      },
+      "LogicLayer/1.0.0": {
         "dependencies": {
           "InterfaceLayer": "1.0.0"
         },
         "runtime": {
-          "BusinessLayer.dll": {}
-        }
-      },
-      "InterfaceLayer/1.0.0": {
-        "runtime": {
-          "InterfaceLayer.dll": {}
+          "LogicLayer.dll": {}
         }
       }
     }
@@ -35,12 +35,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "BusinessLayer/1.0.0": {
+    "InterfaceLayer/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "InterfaceLayer/1.0.0": {
+    "LogicLayer/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

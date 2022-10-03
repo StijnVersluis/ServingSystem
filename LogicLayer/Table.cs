@@ -13,11 +13,8 @@ namespace BusinessLayer
         public int Id { private set; get; }
         public string Name { private set; get; }
 
-        private ITable iTable;
-
-        public Table(ITable itable, int id, string name)
+        public Table(int id, string name)
         {
-            iTable = itable;
             Id = id;
             Name = name;
         }
@@ -28,22 +25,27 @@ namespace BusinessLayer
             Name = table.Name;
         }
 
+        public TableDTO ToDTOWithoutId()
+        {
+            return new TableDTO(this.Id, this.Name);
+        }
+
         /// <summary>
         /// Get all the orders from Table.
         /// </summary>
-        /// <returns>A List of Orders<returns>
-        public List<Order> GetOrders()
+        /// <returns>A List of Orders</returns>
+        public List<Order> GetOrders(ITable iTable)
         {
-            return iTable.GetOrders().ConvertAll(x => new Order(x));
+            return iTable.GetOrders(this.Id).ConvertAll(x => new Order(x));
         }
 
         /// <summary>
         /// Get the total price of all orders from the table.
         /// </summary>
         /// <returns>A double with the total price of the items ordered.</returns>
-        public double GetTotalPrice()
+        public double GetTotalPrice(ITable iTable)
         {
-            return iTable.GetTotalPrice();
+            return iTable.GetTotalPrice(this.Id);
         }
 
         ///<summary>
@@ -51,7 +53,7 @@ namespace BusinessLayer
         /// </summary>
         /// <param name="staffId">The id of the staff member logged in.</param>
         /// <returns>The newly created order.</returns>
-        public Order CreateOrder(int staffId)
+        public Order CreateOrder(ITable iTable, int staffId)
         {
             return new Order(iTable.CreateOrder(this.Id, staffId));
         }
@@ -60,18 +62,9 @@ namespace BusinessLayer
         /// Edit Table in database
         /// </summary>
         /// <returns>The recently edited Table</returns>
-        public Table Edit(string name)
+        public Table Edit(ITable iTable, string name)
         {
             return new Table(iTable.Edit(new TableDTO(this.Id, name)));
-        }
-
-        ///<summary>
-        /// Remove Table from database
-        /// </summary>
-        /// <returns>True or false based on if it has been successful</returns>
-        public bool Remove()
-        {
-            return iTable.Remove(new TableDTO(this.Id, this.Name));
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yyz9NE74oPIVf5e/kj+7V/0XDr7txJP56iL1edG6P1gCLoU6dAG+4r+BcVoCvmzT3UGIk+IhUBdGloBVdcsfng==",
+  "dgSpecHash": "fbTXUa0hkAAK7X37yMV0UT4ubZdoEBEeN/AZmH9L9qQB7YkrHoOkdPTTg4oVxhUHpH8Nv8vRSUnxwBATkzhjlQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\ServingSystem.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,8 @@
     "C:\\Users\\stijn\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\stijn\\.nuget\\packages\\system.data.sqlclient\\4.8.3\\system.data.sqlclient.4.8.3.nupkg.sha512",
     "C:\\Users\\stijn\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
-    "C:\\Users\\stijn\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+    "C:\\Users\\stijn\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\stijn\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
   ],
   "logs": []
 }

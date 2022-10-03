@@ -11,9 +11,6 @@ namespace InterfaceLayer.DTO
         public int Id;
         public int SeatedTableId;
         public int StaffId;
-        public List<ProductDTO> Products;
         public DateTime CreatedAt;
-
-
     }
 }

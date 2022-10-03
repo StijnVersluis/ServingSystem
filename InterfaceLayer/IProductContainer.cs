@@ -9,8 +9,10 @@ namespace InterfaceLayer
 {
     public interface IProductContainer
     {
-        public ProductDTO GetProduct(int Id);
         public List<ProductDTO> GetAll();
         public List<ProductDTO> GetAllOfType(int type);
+        public ProductDTO GetProduct(int Id);
+        public ProductDTO CreateProduct(ProductDTO product);
+        public bool DeleteProduct(int id);
     }
 }

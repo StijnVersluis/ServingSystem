@@ -2,7 +2,6 @@ C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\bin\Debug\net5.0\Interf
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\bin\Debug\net5.0\InterfaceLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\bin\Debug\net5.0\ref\InterfaceLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\bin\Debug\net5.0\InterfaceLayer.pdb
-C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.csproj.AssemblyReference.cache
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.AssemblyInfoInputs.cache
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\Interf
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\ref\InterfaceLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\InterfaceLayer\obj\Debug\net5.0\InterfaceLayer.csproj.AssemblyReference.cache

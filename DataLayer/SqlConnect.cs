@@ -9,23 +9,23 @@ namespace DataLayer
     public class SqlConnect
     {
         //variabele aanmaken die in de DAL kunnen worden gebuikt.
-        internal SqlCommand cmd;
-        internal SqlConnection con;
+        internal SqlCommand DbCom;
+        internal SqlConnection DBConnection;
 
         //Methode om connection tussen database op te zetten.
-        public void Initialize()
+        public void InitializeDB()
         {
-            string connectionString = @"Data Source=mssqlstud.fhict.local;Database=;User Id=;Password=;";
-            con = new SqlConnection(connectionString);
-            cmd = con.CreateCommand();
+            string connectionString = @"Data Source=mssqlstud.fhict.local;Database=dbi482774_servingsys;User Id=dbi482774_servingsys;Password=ServingSystem;";
+            DBConnection = new SqlConnection(connectionString);
+            DbCom = DBConnection.CreateCommand();
         }
 
         //Connectie opzetten met database.
-        public bool OpenConnect()
+        public bool OpenCon()
         {
             try
             {
-                con.Open();
+                DBConnection.Open();
                 return true;
             }
             catch (SqlException)
@@ -35,11 +35,12 @@ namespace DataLayer
         }
 
         //Connectie afsluiten met database.
-        public bool CloseConnect()
+        public bool CloseCon()
         {
             try
             {
-                con.Close();
+                DbCom.Parameters.Clear();
+                DBConnection.Close();
                 return true;
             }
             catch (SqlException)

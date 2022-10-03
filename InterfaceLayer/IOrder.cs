@@ -10,8 +10,8 @@ namespace InterfaceLayer
     public interface IOrder
     {
         public List<ProductDTO> GetProducts(int id);
-        public bool AddProduct(ProductDTO product);
-        public bool RemoveProduct(ProductDTO product);
-        public bool RemoveProduct(ProductDTO product, int amount);
+        public bool AddProduct(int orderId, ProductDTO product);
+        public bool RemoveProduct(int id);
+        public bool SaveOrder(int id);
     }
 }
