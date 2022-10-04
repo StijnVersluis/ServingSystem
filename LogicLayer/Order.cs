@@ -27,9 +27,9 @@ namespace BusinessLayer
         /// Get the products from the Order placed on a Table.
         /// </summary>
         /// <returns>A List of Products.</returns>
-        public List<Product> GetProducts(IOrder iOrder)
+        public List<OrderRule> GetProducts(IOrder iOrder)
         {
-            return iOrder.GetProducts(this.Id).ConvertAll(x=>new Product(x));
+            return iOrder.GetProducts(this.Id).ConvertAll(x=>new OrderRule(x));
         }
 
         /// <summary>
@@ -45,11 +45,11 @@ namespace BusinessLayer
         /// <summary>
         /// Remove Product from an Order.
         /// </summary>
-        /// <param name="product">The product that is going to be removed.</param>
+        /// <param name="productId">The product that is going to be removed.</param>
         /// <returns>Succesfulness (bool) of remove the product from the order.</returns>
-        public bool RemoveProduct(IOrder iOrder, int id)
+        public bool RemoveProduct(IOrder iOrder, int productId)
         {
-            return iOrder.RemoveProduct(id);
+            return iOrder.RemoveProduct(this.Id, productId);
         }
 
         /// <summary>
