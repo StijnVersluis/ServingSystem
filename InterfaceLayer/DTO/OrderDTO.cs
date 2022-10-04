@@ -12,5 +12,13 @@ namespace InterfaceLayer.DTO
         public int SeatedTableId;
         public int StaffId;
         public DateTime CreatedAt;
+
+        public OrderDTO(int id, int seatedTable, int staffId, DateTime createdAt)
+        {
+            Id = id;
+            SeatedTableId = seatedTable;
+            StaffId = staffId;
+            CreatedAt = createdAt;
+        }
     }
 }

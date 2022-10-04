@@ -3,6 +3,7 @@ using InterfaceLayer.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DataLayer
 {
@@ -15,18 +16,44 @@ namespace DataLayer
         #region Methods from ITable
         public OrderDTO CreateOrder(int id, int staffId)
         {
+            int sTableId = 0;
+            DateTime dt = DateTime.Now;
+            OrderDTO order = null;
+
             OpenCon();
 
+            DbCom.CommandText = "SELECT Id, Time_Arrived FROM SeatedTables WHERE Table_Id = @id and Time_Left = null";
+            DbCom.Parameters.AddWithValue("id", id);
+            reader = DbCom.ExecuteReader();
+
+            while (reader.Read())
+            {
+                sTableId = (int)reader["Id"];
+                dt = (DateTime)reader["Time_Arrived"];
+            }
+            if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
+
+            DbCom.Parameters.Clear();
+
+            DbCom.CommandText = "SELECT * FROM Orders Where SeatedTable_id = @sTableId and Created_At >= @timeArrived";
+            DbCom.Parameters.AddWithValue("sTableId", sTableId);
+            DbCom.Parameters.AddWithValue("timeArrived", dt);
+
+
+            reader = DbCom.ExecuteReader();
+            while (reader.Read())
+            {
+                order = new OrderDTO((int)reader["Id"], (int)reader["SeatedTable_Id"], (int)reader["Staff_Id"], (DateTime)reader["Created_At"]);
+            }
+
             CloseCon();
-            return new OrderDTO();
+
+            return order;
         }
 
         public TableDTO Edit(TableDTO newTable)
         {
-            OpenCon();
-
-            CloseCon();
-            return new TableDTO(1,"h");
+            throw new NotImplementedException();
         }
 
         public List<OrderDTO> GetOrders(int id)
@@ -44,20 +71,27 @@ namespace DataLayer
             }
             if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
 
+
+            DbCom.Parameters.Clear();
+
             DbCom.CommandText = "SELECT * FROM Orders Where SeatedTable_id = @sTableId";
+            DbCom.Parameters.AddWithValue("sTableId", sTableId);
 
             reader = DbCom.ExecuteReader();
+            var list = new List<OrderDTO>();
+
+            while (reader.Read())
+            {
+                list.Add(new OrderDTO((int)reader["Id"], (int)reader["SeatedTable_Id"], (int)reader["Staff_Id"], (DateTime)reader["Created_AT"]));
+            }
 
             CloseCon();
-            return new List<OrderDTO> { new OrderDTO(), new OrderDTO() };
+            return list;
         }
 
         public double GetTotalPrice(int id)
         {
-            OpenCon();
-
-            CloseCon();
-            return 1.1;
+            throw new NotImplementedException();
         }
         #endregion
 
