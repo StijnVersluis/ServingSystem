@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer;
+using LogicLayer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using ServingSystem.Models;
 using System;
@@ -12,6 +15,7 @@ namespace ServingSystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private StaffContainer StaffContainer = new StaffContainer(new StaffDAL());
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,12 +24,14 @@ namespace ServingSystem.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (StaffContainer.IsLoggedIn() == false) return Redirect("/");
+            else return View("Index");
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            if (StaffContainer.IsLoggedIn() == false) return Redirect("/");
+            else return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,6 +1,5 @@
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\LogicLayer.deps.json
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\LogicLayer.dll
-C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\ref\LogicLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\LogicLayer.pdb
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\InterfaceLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\bin\Debug\net5.0\InterfaceLayer.pdb
@@ -13,3 +12,4 @@ C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\LogicLayer
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\LogicLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\ref\LogicLayer.dll
 C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\LogicLayer.pdb
+C:\Users\stijn\source\repos\ServingSystem\LogicLayer\obj\Debug\net5.0\refint\LogicLayer.dll

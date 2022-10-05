@@ -21,13 +21,39 @@ namespace DataLayer
                 OpenCon();
 
                 //TODO: Check if already exist then add to amount.
-
-                DbCom.CommandText = "INSERT INTO OrderRules (Order_Id, Product_Id, Amount, Product_Price) Values (@orderId, @productId, 1, @price)";
+                DbCom.CommandText = "SELECT * FROM OrderRules WHERE Order_Id = @orderId and Product_Id = @productId";
                 DbCom.Parameters.AddWithValue("orderId", orderId);
                 DbCom.Parameters.AddWithValue("price", product.Id);
-                DbCom.Parameters.AddWithValue("price", product.Price);
 
-                var reader = DbCom.ExecuteNonQuery();
+                reader = DbCom.ExecuteReader();
+                int amount = 0;
+                while(reader.Read())
+                {
+                    amount = (int)reader["Amount"];
+                }
+
+                if (amount > 0)
+                {
+
+                    DbCom.Parameters.Clear();
+                    DbCom.CommandText = "UPDATE OrderRules SET Amount = @amount WHERE Order_Id = @orderId AND Product_Id = @productId";
+                    DbCom.Parameters.AddWithValue("orderId", orderId);
+                    DbCom.Parameters.AddWithValue("productId", product.Id);
+                    DbCom.Parameters.AddWithValue("amount", amount+1);
+
+                    DbCom.ExecuteNonQuery();
+                }
+                else
+                {
+
+                    DbCom.Parameters.Clear();
+                    DbCom.CommandText = "INSERT INTO OrderRules (Order_Id, Product_Id, Amount, Product_Price) Values (@orderId, @productId, 1, @price)";
+                    DbCom.Parameters.AddWithValue("orderId", orderId);
+                    DbCom.Parameters.AddWithValue("productId", product.Id);
+                    DbCom.Parameters.AddWithValue("price", product.Price);
+
+                    DbCom.ExecuteNonQuery();
+                }
 
                 CloseCon();
 

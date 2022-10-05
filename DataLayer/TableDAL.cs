@@ -14,6 +14,7 @@ namespace DataLayer
         private SqlDataReader reader;
 
         #region Methods from ITable
+        //Done
         public OrderDTO CreateOrder(int id, int staffId)
         {
             int sTableId = 0;
@@ -51,11 +52,12 @@ namespace DataLayer
             return order;
         }
 
+        //TODO
         public TableDTO Edit(TableDTO newTable)
         {
             throw new NotImplementedException();
         }
-
+        //Done
         public List<OrderDTO> GetOrders(int id)
         {
             OpenCon();
@@ -89,6 +91,7 @@ namespace DataLayer
             return list;
         }
 
+        //TODO
         public double GetTotalPrice(int id)
         {
             throw new NotImplementedException();
@@ -96,6 +99,7 @@ namespace DataLayer
         #endregion
 
         #region Methods from ITableContainer
+        //Done
         public List<TableDTO> GetAll()
         {
             OpenCon();
