@@ -2,6 +2,7 @@
 using LogicLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using ServingSystem.Models;
 using System;
@@ -26,6 +27,12 @@ namespace ServingSystem.Controllers
         {
             if (StaffContainer.IsLoggedIn() == false) return Redirect("/");
             else return View("Index");
+        }
+
+        public IActionResult Login()
+        {
+            if (StaffContainer.IsLoggedIn() == false) return View();
+            else return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
