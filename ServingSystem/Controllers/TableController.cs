@@ -1,27 +1,30 @@
-﻿using BusinessLayer;
+﻿using LogicLayer;
 using DataLayer;
 using InterfaceLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ServingSystem.Models;
+using System;
 
 namespace ServingSystem.Controllers
 {
     public class TableController : Controller
     {
         private readonly TableContainer tableContainer = new TableContainer(new TableDAL());
-        // GET: TableController
-        public ActionResult Index()
-        {
-            List<Table> tables = tableContainer.GetAll();
-            return View(tables);
-        }
 
         // GET: TableController/Details/5
         public ActionResult Details(int id)
         {
             Table table = tableContainer.GetTable(id);
-            return View(table);
+            return View(new TableViewModel(table, table.Time_Arrived));
+        }
+
+        // GET: TableController/Create
+        public ActionResult CloseTable(int id)
+        {
+            tableContainer.CloseTable(id);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: TableController/Create
@@ -35,9 +38,11 @@ namespace ServingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+            collection.TryGetValue("Name", out var name);
             try
             {
-                return RedirectToAction(nameof(Index));
+                tableContainer.CreateTable(name);
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -58,7 +63,7 @@ namespace ServingSystem.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -79,7 +84,7 @@ namespace ServingSystem.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

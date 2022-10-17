@@ -13,5 +13,6 @@ namespace InterfaceLayer
         public bool AttemptLogin(string uName, string password);
         public StaffDTO GetLoggedInStaff();
         public bool IsLoggedIn();
+        public bool Logout();
     }
 }

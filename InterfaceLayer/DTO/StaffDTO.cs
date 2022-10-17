@@ -11,12 +11,14 @@ namespace InterfaceLayer.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string UName { get; set; }
+        public bool IsAdmin { get; set; }
 
-        public StaffDTO(int id, string name, string uName)
+        public StaffDTO(int id, string name, string uName, bool isAdmin)
         {
             Id = id;
             Name = name;
             UName = uName;
+            IsAdmin = isAdmin;
         }
     }
 }

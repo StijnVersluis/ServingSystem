@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer
+namespace LogicLayer
 {
     public class Table
     {
         public int Id { private set; get; }
         public string Name { private set; get; }
+        public DateTime Time_Arrived { private set; get; }
 
         public Table(int id, string name)
         {
@@ -23,6 +24,13 @@ namespace BusinessLayer
         {
             Id = table.Id;
             Name = table.Name;
+        }
+
+        public Table(TableDTO table, DateTime timearrived)
+        {
+            Id = table.Id;
+            Name = table.Name;
+            Time_Arrived = timearrived;
         }
 
         public TableDTO ToDTOWithoutId()
@@ -46,6 +54,15 @@ namespace BusinessLayer
         public double GetTotalPrice(ITable iTable)
         {
             return iTable.GetTotalPrice(this.Id);
+        }
+
+        /// <summary>
+        /// Get the total price of all orders from the table.
+        /// </summary>
+        /// <returns>A double with the total price of the items ordered.</returns>
+        public string GetLastOrderText(ITable iTable)
+        {
+            return iTable.GetLastOrderText(this.Id);
         }
 
         ///<summary>

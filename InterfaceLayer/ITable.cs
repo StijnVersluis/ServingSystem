@@ -11,6 +11,7 @@ namespace InterfaceLayer
     {
         public List<OrderDTO> GetOrders(int id);
         public double GetTotalPrice(int id);
+        public string GetLastOrderText(int id);
         public OrderDTO CreateOrder(int id, int staffId);
         public TableDTO Edit(TableDTO newTable);
     }

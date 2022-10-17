@@ -1,4 +1,4 @@
-﻿using BusinessLayer;
+﻿using LogicLayer;
 using DataLayer;
 using System;
 

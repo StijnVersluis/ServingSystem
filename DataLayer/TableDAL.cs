@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace DataLayer
 {
@@ -51,7 +53,6 @@ namespace DataLayer
 
             return order;
         }
-
         //TODO
         public TableDTO Edit(TableDTO newTable)
         {
@@ -90,11 +91,47 @@ namespace DataLayer
             CloseCon();
             return list;
         }
-
-        //TODO
+        //Done
         public double GetTotalPrice(int id)
         {
-            throw new NotImplementedException();
+            double TotalPrice = 0;
+            OpenCon();
+
+            DbCom.CommandText = "SELECT Orders.Id, SeatedTable_Id, Staff_Id, Orders.Created_At, Saved_At, Product_Id, Amount, Product_Price, OrderRules.Created_At as AddedRuleDate FROM Orders " +
+                                "INNER JOIN OrderRules on Order_Id = Orders.Id " +
+                                "WHERE SeatedTable_Id = @id and " +
+                                "Saved_At is null and " +
+                                "OrderRules.Created_At >= Orders.Created_At";
+            DbCom.Parameters.AddWithValue("id", id);
+            reader = DbCom.ExecuteReader();
+
+            while(reader.Read())
+            {
+                TotalPrice += (double)reader["Product_Price"];
+            }
+            return TotalPrice;
+        }
+        //Done
+        public string GetLastOrderText(int id)
+        {
+            string lastOrderString = "";
+            OpenCon();
+
+            DbCom.CommandText = "SELECT TOP 1 Orders.Id, Orders.Staff_Id, Staff.Name, Orders.Saved_At, OrderRules.Created_At as AddedRuleDate FROM Orders " +
+                                "INNER JOIN OrderRules on Order_Id = Orders.Id " +
+                                "INNER JOIN Staff on Staff.Id = Orders.Staff_Id " +
+                                "WHERE SeatedTable_Id = @id and " +
+                                "Saved_At is null and " +
+                                "OrderRules.Created_At >= Orders.Created_At " +
+                                "order by AddedRuleDate desc";
+            DbCom.Parameters.AddWithValue("id", id);
+            reader = DbCom.ExecuteReader();
+
+            while(reader.Read())
+            {
+                lastOrderString = (string)reader["Name"] + " - " + ((DateTime)reader["AddedRuleDate"]).ToString("HH:mm:ss");
+            }
+            return lastOrderString;
         }
         #endregion
 
@@ -117,28 +154,61 @@ namespace DataLayer
             CloseCon();
             return tables;
         }
+        //Done
+        public List<TableDTO> GetAllNonSeatedTables()
+        {
+            OpenCon();
 
+            DbCom.CommandText = "SELECT Table_Id, Tables.Name as 'Table_Name', MAX(Time_Arrived), MAX(Time_Left) FROM SeatedTables" +
+                " INNER JOIN Tables on SeatedTables.Table_Id = Tables.Id" +
+                " GROUP BY Table_Id, Tables.Name" +
+                " HAVING count(Time_Arrived) = count(Time_Left)";
+
+            reader = DbCom.ExecuteReader();
+
+            var nonSeatedTables = new List<TableDTO>();
+
+            while (reader.Read())
+            {
+                nonSeatedTables.Add(new TableDTO((int)reader["Table_Id"], (string)reader["Table_Name"]));
+            }
+            CloseCon();
+            OpenCon();
+
+            // select all the tables that have never been in SeatedTables table
+            // this is because of the left join that the "Table_id is null"
+            DbCom.CommandText = "SELECT * FROM Tables" +
+                " LEFT JOIN SeatedTables on Tables.Id = SeatedTables.Table_Id" +
+                " WHERE SeatedTables.Table_Id is null";
+
+            reader = DbCom.ExecuteReader();
+
+            while (reader.Read())
+            {
+                nonSeatedTables.Add(new TableDTO((int)reader["Id"], (string)reader["Name"]));
+            }
+
+
+
+            CloseCon();
+            return nonSeatedTables;
+        }
         //Done
         public List<TableDTO> GetAllSeatedTables()
         {
             OpenCon();
 
-            DbCom.CommandText = "SELECT * FROM SeatedTables WHERE Time_Left is NULL ORDER BY Id";
+            DbCom.CommandText = "SELECT Tables.Id as 'Table_Id', Tables.Name as 'Table_Name', Time_Arrived, Time_Left FROM SeatedTables" +
+                " INNER JOIN Tables on SeatedTables.Table_Id = Tables.Id" +
+                " WHERE Time_Left is NULL";
 
             reader = DbCom.ExecuteReader();
 
             var tables = new List<TableDTO>();
 
-            var sTables = new Dictionary<int, DateTime>();
-
             while (reader.Read())
             {
-                sTables.Add((int)reader["Table_Id"], (DateTime)reader["Time_Arrived"]);
-            }
-
-            while (reader.Read())
-            {
-                tables.Add(new TableDTO((int)reader["Table_Id"], (string)reader["Name"], (DateTime)reader["Time_Arrived"]));
+                tables.Add(new TableDTO((int)reader["Table_Id"], (string)reader["Table_Name"], (DateTime)reader["Time_Arrived"]));
             }
 
             CloseCon();
@@ -165,19 +235,20 @@ namespace DataLayer
             return table;
         }
         //Done
-        public bool CreateTable(TableDTO table)
+        public bool CreateTable(string name)
         {
             OpenCon();
 
             DbCom.CommandText = "INSERT INTO Tables (Name) VALUES (@name)";
 
-            DbCom.Parameters.AddWithValue("name", table.Name);
+            DbCom.Parameters.AddWithValue("name", name);
 
             bool succeeded = false;
             try
             {
                 if (DbCom.ExecuteNonQuery() > 0) succeeded = true; else succeeded = false;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 succeeded = false;
             }
@@ -199,6 +270,94 @@ namespace DataLayer
             if (DbCom.ExecuteNonQuery() > 0) succeeded = true; else succeeded = false;
 
 
+            CloseCon();
+            return succeeded;
+        }
+        //Done
+        public bool OpenTable(int id)
+        {
+            bool succeeded = false;
+
+            OpenCon();
+
+            DbCom.CommandText = "SELECT TOP 1 * FROM SeatedTables WHERE Table_Id = @id and Time_Left = null";
+
+            DbCom.Parameters.AddWithValue("id", id);
+
+
+            reader = DbCom.ExecuteReader();
+
+            TableDTO table = null;
+
+            while (reader.Read())
+            {
+                table = new TableDTO((int)reader["Id"], (string)reader["Name"]);
+            }
+
+            CloseCon();
+            OpenCon();
+            if (table != null)
+            {
+                succeeded = false;
+            } else
+            {
+
+                DbCom.CommandText = "INSERT INTO SeatedTables (Table_Id, Time_Arrived) VALUES (@id, @now)";
+
+                DbCom.Parameters.AddWithValue("id", id);
+                DbCom.Parameters.AddWithValue("now", DateTime.Now);
+
+                if (DbCom.ExecuteNonQuery() > 0)
+                {
+                    succeeded = true;
+                }
+            }
+            CloseCon();
+            return succeeded;
+        }
+        //Done
+        public bool CloseTable(int id)
+        {
+            bool succeeded = false;
+
+            OpenCon();
+
+            DbCom.CommandText = "SELECT TOP 1 SeatedTables.Id, SeatedTables.Table_Id, Time_Arrived, Time_Left, Tables.Id as 'TableId', Tables.Name FROM SeatedTables" +
+                " INNER JOIN Tables on SeatedTables.Table_Id = Tables.Id" +
+                " WHERE Table_Id = @id and Time_Left is null";
+
+            DbCom.Parameters.AddWithValue("id", id);
+
+
+            reader = DbCom.ExecuteReader();
+
+            TableDTO table = null;
+            int SeatedTableId = 0;
+
+            while (reader.Read())
+            {
+                table = new TableDTO((int)reader["Table_Id"], (string)reader["Name"]);
+                SeatedTableId = (int)reader["Id"];
+            }
+
+            CloseCon();
+            OpenCon();
+            if (table == null)
+            {
+                succeeded = false;
+            } else
+            {
+
+                DbCom.CommandText = "UPDATE SeatedTables SET Time_Left = @now WHERE id = @id";
+
+                DbCom.Parameters.AddWithValue("id", SeatedTableId);
+                DbCom.Parameters.AddWithValue("now", DateTime.Now);
+
+                if (DbCom.ExecuteNonQuery() > 0)
+                {
+                    succeeded = true;
+                }
+            }
             CloseCon();
             return succeeded;
         }

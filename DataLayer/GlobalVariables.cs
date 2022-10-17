@@ -9,6 +9,6 @@ namespace DataLayer
 {
     public class GlobalVariables
     {
-        public static StaffDTO LoggedInUser = null;
+        public static StaffDTO LoggedInUser = new StaffDTO(1, "Kimberley", "kimby", false);
     }
 }

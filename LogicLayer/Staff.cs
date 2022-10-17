@@ -13,12 +13,14 @@ namespace LogicLayer
         public int Id { get; set; }
         public string Name { get; set; }
         public string UName { get; set; }
+        public bool IsAdmin { get; set; }
 
-        public Staff(int id, string name, string uName, string code)
+        public Staff(int id, string name, string uName, string code, bool isAdmin)
         {
             Id = id;
             Name = name;
             UName = uName;
+            IsAdmin = isAdmin;
         }
 
         public Staff(StaffDTO staff)
@@ -26,11 +28,12 @@ namespace LogicLayer
             Id = staff.Id;
             Name = staff.Name;
             UName = staff.UName;
+            IsAdmin = staff.IsAdmin;
         }
 
         public StaffDTO ToDTO()
         {
-            return new StaffDTO(Id, Name, UName);
+            return new StaffDTO(Id, Name, UName, IsAdmin);
         }
 
         //public string GetCode(IStaff istaff)

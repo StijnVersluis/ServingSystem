@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer
+namespace LogicLayer
 {
     public class TableContainer
     {
@@ -30,7 +30,15 @@ namespace BusinessLayer
         /// <returns>A List of Tables that are seated.</returns>
         public List<Table> GetAllSeatedTables()
         {
-            return iTableContainer.GetAllSeatedTables().ConvertAll(x=>new Table(x));
+            return iTableContainer.GetAllSeatedTables().ConvertAll(x=>new Table(x, x.Time_Arrived));
+        }
+        /// <summary>
+        /// Get all seated Tables.
+        /// </summary>
+        /// <returns>A List of Tables that are seated.</returns>
+        public List<Table> GetAllNonSeatedTables()
+        {
+            return iTableContainer.GetAllNonSeatedTables().ConvertAll(x=>new Table(x));
         }
 
         /// <summary>
@@ -47,9 +55,9 @@ namespace BusinessLayer
         /// Delete Table based on Id.
         /// </summary>
         /// <returns>Succesfulness (bool) on deleting the Table.</returns>
-        public bool CreateTable(Table table)
+        public bool CreateTable(string name)
         {
-            return iTableContainer.CreateTable(table.ToDTOWithoutId());
+            return iTableContainer.CreateTable(name);
         }
 
         ///<summary>
@@ -59,6 +67,24 @@ namespace BusinessLayer
         public bool DeleteTable(int id)
         {
             return iTableContainer.DeleteTable(id);
+        }
+
+        ///<summary>
+        /// Open Table based on Id.
+        /// </summary>
+        /// <returns>Succesfulness (bool) on opening the Table.</returns>
+        public bool OpenTable(int id)
+        {
+            return iTableContainer.OpenTable(id);
+        }
+
+        ///<summary>
+        /// Close Table based on Id.
+        /// </summary>
+        /// <returns>Succesfulness (bool) on Closing the Table.</returns>
+        public bool CloseTable(int id)
+        {
+            return iTableContainer.CloseTable(id);
         }
     }
 }

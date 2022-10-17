@@ -24,6 +24,10 @@ namespace LogicLayer
         {
             return sCont.IsLoggedIn();
         }
+        public bool Logout()
+        {
+            return sCont.Logout();
+        }
         public Staff GetLoggedInStaff()
         {
             return new Staff(sCont.GetLoggedInStaff());

@@ -13,6 +13,12 @@ namespace DataLayer
     public class StaffDAL : SqlConnect, IStaff, IStaffContainer
     {
         private SqlDataReader reader;
+
+        public StaffDAL()
+        {
+            InitializeDB();
+        }
+
         public bool AttemptLogin(string uName, string password)
         {
             OpenCon();
@@ -27,7 +33,7 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                staff = new StaffDTO((int)reader["Id"], (string)reader["Name"], (string)reader["UName"]);
+                staff = new StaffDTO((int)reader["Id"], (string)reader["Name"], (string)reader["UName"], (bool)reader["Is_Admin"]);
             }
             if (GetCode(staff) == password)
             {
@@ -44,6 +50,7 @@ namespace DataLayer
             DbCom.Parameters.Clear();
             DbCom.CommandText = "SELECT Code FROM Staff WHERE Id = @id";
             DbCom.Parameters.AddWithValue("id", staff.Id);
+            reader.Close();
             reader = DbCom.ExecuteReader();
             string code = "";
             while (reader.Read())
@@ -62,6 +69,12 @@ namespace DataLayer
         {
             if (GlobalVariables.LoggedInUser != null) return true;
             else return false;
+        }
+
+        public bool Logout()
+        {
+            GlobalVariables.LoggedInUser = null;
+            return GlobalVariables.LoggedInUser == null;
         }
     }
 }
