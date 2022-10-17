@@ -1,9 +1,96 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var staff = ViewData["CurrentStaff"] as StaffViewModel;
+    var createTableLink = "";
+
+    if (staff.IsAdmin)
+    {
+        createTableLink = "<a asp-action=\"Create\" asp-controller=\"Table\" class=\"btn btn-success\">Create New Table</a>";
+    }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-
+<div class="modal fade" id="NewTableModal" tabindex="-1" role="form" aria-labelledby="NewTableModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NewTableModalLabel">Open Table</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">Table name:</div>
+                        <div class="col-6 modal-table-name"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Staff:</div>
+                        <div class="col-6">@staff.Name</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">Opening on:</div>
+                        <div class="col-6 modal-current-time"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form asp-action="OpenTable" method="post">
+                    <input type="hidden" name="id" class="modal-table-id-input" />
+                    <button type="submit" class="btn btn-success">Open table</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+    <h1 class="">@staff.Name</h1>
+    <div class="row">
+        <div class="container p-1 col-md-9" id="TableViewContainer">
+            <h2 class="mb-5 open-table-label">Opened tables:</h2>
+            <div id="TableListHeader" class="row mx-2">
+                <div class="col-2">Table:</div>
+                <div class="col-4">Last order:</div>
+                <div class="col-3">Price:</div>
+                <div class="col-3">Time Arrived:</div>
+            </div>
+            <div id="TableViewList" class="list-group mt-2">
+                @{
+                    foreach (TableViewModel table in ViewData["SeatedTables"] as List<TableViewModel>)
+                    {
+                            <text>
+                                <a class="list-group-item" asp-controller="Table" asp-action="Details" asp-route-id="@table.Id">
+                                    <div class="row">
+                                        <div class="col-2">@table.Name</div>
+                                        <div class="col-4">@table.GetLastOrderText()</div>
+                                        <div class="col-3">&euro; @table.GetTotalPrice()</div>
+                                        <div class="col-3">@table.Time_Arrived.ToString("HH:mm:ss")</div>
+                                    </div>
+                                </a>
+                            </text>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-md-3 p-1" id="NewTableContainer">
+            <h2>New tables:</h2>
+            <div class="table-searchbar" id="NewTableSearchbar">
+                <div class="input-group mb-3">
+                    <input type="text" name="NewTableName" class="form-control" placeholder="Table name">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    </div>
+                </div>
+                <div id="NewTableList" class="list-group mt-2">
+                    @{
+                        foreach (TableViewModel table in ViewData["AllNonSeatedTables"] as List<TableViewModel>)
+                        {
+                                <text><button data-toggle="modal" data-target="#NewTableModal" class="btn list-group-item text-left" data-id="@table.Id" data-name="@table.Name">@table.Name</button></text>
+                        }
+                    }
+                </div>
+                @createTableLink
+            </div>
+        </div>
+    </div>
 </div>
