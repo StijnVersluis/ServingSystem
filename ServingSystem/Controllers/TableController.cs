@@ -6,17 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ServingSystem.Models;
 using System;
+using System.Runtime.InteropServices;
 
 namespace ServingSystem.Controllers
 {
     public class TableController : Controller
     {
-        private readonly TableContainer tableContainer = new TableContainer(new TableDAL());
+        private static readonly TableDAL tDAL = new();
+        private static readonly OrderDAL oDAL = new();
+        private readonly TableContainer tableContainer = new (tDAL);
+        private readonly ProductContainer productContainer = new (new ProductDAL());
+        private readonly StaffContainer userContainer = new(new StaffDAL());
 
         // GET: TableController/Details/5
         public ActionResult Details(int id)
         {
             Table table = tableContainer.GetTable(id);
+            var openOrder = table.GetOpenOrder(tDAL);
+            if (openOrder != null)
+            {
+                ViewData["OpenOrder"] = new OrderViewModel(openOrder, openOrder.GetProducts(oDAL));
+            }
+            ViewData["Products"] = productContainer.GetAll().ConvertAll(x => new ProductViewModel(x));
+            ViewData["AllOrders"] = table.GetOrders(tDAL).ConvertAll(x => new OrderViewModel(x, x.GetProducts(oDAL)));
             return View(new TableViewModel(table, table.Time_Arrived));
         }
 
@@ -25,6 +37,12 @@ namespace ServingSystem.Controllers
         {
             tableContainer.CloseTable(id);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public void CreateOrder([FromBody] OrderProductJson collection)
+        {
+            tableContainer.GetTable(collection.TableId).CreateOrder(tDAL, (int)HttpContext.Session.GetInt32("UserId"));
         }
 
         // GET: TableController/Create
@@ -91,5 +109,10 @@ namespace ServingSystem.Controllers
                 return View();
             }
         }
+    }
+    public class OrderProductJson
+    {
+        public int TableId { get; set; }
+        public int ProductId { get; set; }
     }
 }

@@ -17,3 +17,38 @@ $('#NewTableModal').on('show.bs.modal', function (event) {
     let currentDate = new Date();
     modal.find('.modal-body .modal-current-time').html(currentDate.getHours() + ":" + currentDate.getMinutes())
 })
+
+function AddToOrder(tableId, productId) {
+    fetch(window.location.origin + "/Order/AddProduct", {
+        method: "POST",
+        body: JSON.stringify({
+            tableid: tableId,
+            productid: productId
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .then(resp => resp.text())
+        .then(data => window.location.reload(true))
+}
+
+
+function CreateOrder(tableId) {
+    fetch(window.location.origin + "/Table/CreateOrder", {
+        method: "POST",
+        body: JSON.stringify({
+            tableid: tableId,
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .then(window.location.reload(true))
+}
+
+function SaveOrder(tableId) {
+    fetch(window.location.origin + "/Order/Save/" + tableId)
+        .then(resp => resp.text())
+        .then(data => window.location.reload(true))
+}

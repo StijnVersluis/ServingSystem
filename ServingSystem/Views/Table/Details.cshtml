@@ -2,18 +2,152 @@
 
 @{
     ViewData["Title"] = "Table " + Model.Name;
+    ViewData["containerType"] = "container-fluid";
+    var AllOrders = ViewData["AllOrders"] as List<OrderViewModel>;
+    var OpenOrderOrNull = ViewData["OpenOrder"] as OrderViewModel;
+    var products = ViewData["Products"] as List<ProductViewModel>;
 }
 
 <h1>
     Table @Model.Name
 </h1>
-
+<a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back to Tables</a>
 <div>
-    <h4>
-    </h4>
-    <hr />
-</div>
-<div>
-    <a class="btn btn-danger" asp-action="CloseTable" asp-route-id="@Model.Id">Close Table</a>
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
+    <div id="TableDetailPageContent" class="row">
+        <div id="AllOrderDetails" class="col-md-3">
+            <div class="card">
+                <div class="card-header">Orders</div>
+                <div class="card-body">
+                    @{ var i = 1; }
+                    @foreach (var order in AllOrders)
+                    {
+                        <div class="ordersItem border">
+                            <h3>Order @i</h3>
+                            @foreach(var orderRule in order.OrderRules) {
+                                var price = string.Format("{0:0.00}", orderRule.Amount * orderRule.ProductPrice);
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-4">@orderRule.LinkedProduct.Name</div>
+                                        <div class="col-2">@orderRule.Amount</div>
+                                        <div class="col-3">&euro; @price</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        i++;
+                    }
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-danger" asp-action="CloseTable" asp-route-id="@Model.Id">Close Table</a>
+                </div>
+            </div>
+        </div>
+        <div id="OpenOrderDetails" class="col-md-3">
+            <div class="card">
+                <div class="card-header">Open Order</div>
+                @if (OpenOrderOrNull != null)
+                {
+                    <div class="card-body">
+                        <div class="list-group">
+                            @foreach (var orderRule in OpenOrderOrNull.OrderRules)
+                            {
+                                var price = string.Format("{0:0.00}", orderRule.Amount * orderRule.ProductPrice);
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-4">@orderRule.LinkedProduct.Name</div>
+                                        <div class="col-2">@orderRule.Amount</div>
+                                        <div class="col-3">&euro; @string.Format("{0:0.00}", @orderRule.ProductPrice)</div>
+                                        <div class="col-3">&euro; @price</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" onclick="SaveOrder(@Model.Id)">Save Order</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-body"></div>
+                    <div class="card-footer">
+                        <button type="button" onclick="CreateOrder(@Model.Id)">Create Order</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div id="ProductLists" class="col-md-6">
+            <div class="row">
+                <div id="ProductDrinkList" class="col-md-4">
+                    <div class="list-group">
+                        @foreach (ProductViewModel product in products)
+                        {
+                            @if (product.ProductType == 2)
+                            {
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            @product.Name
+                                        </div>
+                                        <div class="col-4">
+                                            &euro;@string.Format("{0:0.00}", @product.Price)
+                                        </div>
+                                        <div class="col-4">
+                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div id="ProductFoodList" class="col-md-4">
+                    <div class="list-group">
+                        @foreach (ProductViewModel product in products)
+                        {
+                            @if (product.ProductType == 1)
+                            {
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            @product.Name
+                                        </div>
+                                        <div class="col-4">
+                                            &euro;@string.Format("{0:0.00}", @product.Price)
+                                        </div>
+                                        <div class="col-4">
+                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div id="ProductExtraList" class="col-md-4">
+                    <div class="list-group">
+                        @foreach (ProductViewModel product in products)
+                        {
+                            @if (product.ProductType == 3)
+                            {
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            @product.Name
+                                        </div>
+                                        <div class="col-4">
+                                            &euro;@string.Format("{0:0.00}", @product.Price)
+                                        </div>
+                                        <div class="col-4">
+                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

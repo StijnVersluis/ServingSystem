@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LogicLayer;
+using Microsoft.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServingSystem.Models
 {
@@ -8,8 +10,16 @@ namespace ServingSystem.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public int Price { get; set; }
+        public double Price { get; set; }
         [Required]
         public int ProductType { get; set; }
+
+        public ProductViewModel(Product product)
+        {
+            Id = product.Id;
+            Name = product.Name;
+            Price = product.Price;
+            ProductType = product.Type;
+        }
     }
 }

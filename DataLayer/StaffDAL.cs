@@ -1,12 +1,15 @@
 ﻿using InterfaceLayer;
 using InterfaceLayer.DTO;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DataLayer
 {
@@ -19,7 +22,7 @@ namespace DataLayer
             InitializeDB();
         }
 
-        public bool AttemptLogin(string uName, string password)
+        public int AttemptLogin(string uName, string password)
         {
             OpenCon();
             DbCom.CommandText = "SELECT * FROM Staff WHERE UName = @uname";
@@ -35,13 +38,16 @@ namespace DataLayer
             {
                 staff = new StaffDTO((int)reader["Id"], (string)reader["Name"], (string)reader["UName"], (bool)reader["Is_Admin"]);
             }
-            if (GetCode(staff) == password)
+            if (staff != null)
             {
-                GlobalVariables.LoggedInUser = staff;
-                success = true;
+                if (GetCode(staff) == password)
+                {
+                    success = true;
+                }
             }
             CloseCon();
-            return success;
+            if (staff != null) return staff.Id;
+            else return 0;
         }
 
         public string GetCode(StaffDTO staff)
@@ -57,24 +63,28 @@ namespace DataLayer
             {
                 code = (string)reader[0];
             }
+            CloseCon();
             return code;
         }
 
-        public StaffDTO GetLoggedInStaff()
+        public StaffDTO GetLoggedInStaff(int id)
         {
-            return GlobalVariables.LoggedInUser;
-        }
+            OpenCon();
+            DbCom.CommandText = "SELECT * FROM Staff WHERE Id = @id";
+            DbCom.Parameters.AddWithValue("id", id);
 
-        public bool IsLoggedIn()
-        {
-            if (GlobalVariables.LoggedInUser != null) return true;
-            else return false;
-        }
 
-        public bool Logout()
-        {
-            GlobalVariables.LoggedInUser = null;
-            return GlobalVariables.LoggedInUser == null;
+            reader = DbCom.ExecuteReader();
+
+            StaffDTO staff = null;
+
+            while (reader.Read())
+            {
+                staff = new StaffDTO((int)reader["Id"], (string)reader["Name"], (string)reader["UName"], (bool)reader["Is_Admin"]);
+            }
+
+            CloseCon();
+            return staff;
         }
     }
 }

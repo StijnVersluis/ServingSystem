@@ -128,3 +128,4 @@ C:\Users\stijn\source\repos\ServingSystem\ServingSystem\obj\Debug\net5.0\Razor\V
 C:\Users\stijn\source\repos\ServingSystem\ServingSystem\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\stijn\source\repos\ServingSystem\ServingSystem\obj\Debug\net5.0\Razor\Views\Table\Edit.cshtml.g.cs
 C:\Users\stijn\source\repos\ServingSystem\ServingSystem\obj\Debug\net5.0\Razor\Views\Table\Create.cshtml.g.cs
+C:\Users\stijn\source\repos\ServingSystem\ServingSystem\obj\Debug\net5.0\Razor\Views\Order\GetProducts.cshtml.g.cs

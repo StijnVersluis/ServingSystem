@@ -20,10 +20,9 @@ namespace DataLayer
             {
                 OpenCon();
 
-                //TODO: Check if already exist then add to amount.
                 DbCom.CommandText = "SELECT * FROM OrderRules WHERE Order_Id = @orderId and Product_Id = @productId";
                 DbCom.Parameters.AddWithValue("orderId", orderId);
-                DbCom.Parameters.AddWithValue("price", product.Id);
+                DbCom.Parameters.AddWithValue("productId", product.Id);
 
                 reader = DbCom.ExecuteReader();
                 int amount = 0;
@@ -34,7 +33,8 @@ namespace DataLayer
 
                 if (amount > 0)
                 {
-
+                    CloseCon();
+                    OpenCon();
                     DbCom.Parameters.Clear();
                     DbCom.CommandText = "UPDATE OrderRules SET Amount = @amount WHERE Order_Id = @orderId AND Product_Id = @productId";
                     DbCom.Parameters.AddWithValue("orderId", orderId);
@@ -45,7 +45,8 @@ namespace DataLayer
                 }
                 else
                 {
-
+                    CloseCon();
+                    OpenCon();
                     DbCom.Parameters.Clear();
                     DbCom.CommandText = "INSERT INTO OrderRules (Order_Id, Product_Id, Amount, Product_Price) Values (@orderId, @productId, 1, @price)";
                     DbCom.Parameters.AddWithValue("orderId", orderId);
@@ -89,9 +90,9 @@ namespace DataLayer
 
         public bool RemoveProduct(int id, int productId)
         {
-            OpenCon();
+            //OpenCon();
             throw new NotImplementedException();
-            CloseCon();
+            //CloseCon();
         }
 
         public bool SaveOrder(int id)
@@ -99,7 +100,7 @@ namespace DataLayer
             var success = false;
             OpenCon();
 
-            DbCom.CommandText = "INSERT INTO Orders (Saved_At) Values (@dt) WHERE Id = @id";
+            DbCom.CommandText = "UPDATE Orders SET Saved_At = @dt WHERE Id = @id";
             DbCom.Parameters.AddWithValue("dt", DateTime.Now);
             DbCom.Parameters.AddWithValue("id", id);
 

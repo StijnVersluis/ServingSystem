@@ -16,21 +16,13 @@ namespace LogicLayer
             sCont = staffContainer;
         }
 
-        public bool AttemptLogin(string uName, string password)
+        public int AttemptLogin(string uName, string password)
         {
             return sCont.AttemptLogin(uName.ToLower(), password);
         }
-        public bool IsLoggedIn()
+        public Staff GetLoggedInStaff(int id)
         {
-            return sCont.IsLoggedIn();
-        }
-        public bool Logout()
-        {
-            return sCont.Logout();
-        }
-        public Staff GetLoggedInStaff()
-        {
-            return new Staff(sCont.GetLoggedInStaff());
+            return new Staff(sCont.GetLoggedInStaff(id));
         }
     }
 }

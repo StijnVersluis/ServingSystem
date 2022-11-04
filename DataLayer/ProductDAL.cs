@@ -26,7 +26,7 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                list.Add(new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Type"]));
+                list.Add(new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Product_Type"]));
             }
 
             CloseCon();
@@ -47,7 +47,7 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                list.Add(new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Type"]));
+                list.Add(new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Product_Type"]));
             }
 
             CloseCon();
@@ -68,7 +68,7 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                product = new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Type"]);
+                product = new ProductDTO((int)reader["Id"], (string)reader["Name"], (double)reader["Price"], (int)reader["Product_Type"]);
             }
 
             CloseCon();

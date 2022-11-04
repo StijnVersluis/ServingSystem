@@ -25,7 +25,7 @@ namespace DataLayer
         {
             try
             {
-                DBConnection.Open();
+                if (DBConnection.State == ConnectionState.Closed) DBConnection.Open();
                 return true;
             }
             catch (SqlException)

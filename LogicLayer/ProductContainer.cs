@@ -22,7 +22,7 @@ namespace LogicLayer
         /// <returns>A List of Products</returns>
         public List<Product> GetAll()
         {
-            return iProductContainer.GetAll().ConvertAll(x => new Product(x));
+            return iProductContainer.GetAll().ConvertAll(productDTO => new Product(productDTO));
         }
         /// <summary>
         /// Get all products of a certain type (Food, Drink, etc.).

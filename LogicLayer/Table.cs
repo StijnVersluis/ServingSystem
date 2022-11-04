@@ -3,6 +3,7 @@ using InterfaceLayer.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +64,17 @@ namespace LogicLayer
         public string GetLastOrderText(ITable iTable)
         {
             return iTable.GetLastOrderText(this.Id);
+        }
+
+        /// <summary>
+        /// Get last order from table 
+        /// </summary>
+        /// <returns>A double with the total price of the items ordered.</returns>
+        public Order GetOpenOrder(ITable iTable)
+        {
+            var order = iTable.GetOpenOrder(this.Id);
+            if (order == null) return null;
+            else return new Order(order);
         }
 
         ///<summary>

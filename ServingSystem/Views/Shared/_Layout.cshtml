@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var container = ViewData["containerType"];
+    if (container == null) container = "container";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,7 +37,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="@container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

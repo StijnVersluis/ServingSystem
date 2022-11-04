@@ -10,9 +10,7 @@ namespace InterfaceLayer
 {
     public interface IStaffContainer
     {
-        public bool AttemptLogin(string uName, string password);
-        public StaffDTO GetLoggedInStaff();
-        public bool IsLoggedIn();
-        public bool Logout();
+        public int AttemptLogin(string uName, string password);
+        public StaffDTO GetLoggedInStaff(int id);
     }
 }

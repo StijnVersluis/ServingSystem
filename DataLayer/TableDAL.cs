@@ -22,10 +22,10 @@ namespace DataLayer
             int sTableId = 0;
             DateTime dt = DateTime.Now;
             OrderDTO order = null;
-
+             
             OpenCon();
 
-            DbCom.CommandText = "SELECT Id, Time_Arrived FROM SeatedTables WHERE Table_Id = @id and Time_Left = null";
+            DbCom.CommandText = "SELECT Id, Time_Arrived FROM SeatedTables WHERE Table_Id = @id and Time_Left is null";
             DbCom.Parameters.AddWithValue("id", id);
             reader = DbCom.ExecuteReader();
 
@@ -36,18 +36,17 @@ namespace DataLayer
             }
             if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
 
+            CloseCon();
+            OpenCon();
+
             DbCom.Parameters.Clear();
-
-            DbCom.CommandText = "SELECT * FROM Orders Where SeatedTable_id = @sTableId and Created_At >= @timeArrived";
-            DbCom.Parameters.AddWithValue("sTableId", sTableId);
-            DbCom.Parameters.AddWithValue("timeArrived", dt);
-
-
-            reader = DbCom.ExecuteReader();
-            while (reader.Read())
-            {
-                order = new OrderDTO((int)reader["Id"], (int)reader["SeatedTable_Id"], (int)reader["Staff_Id"], (DateTime)reader["Created_At"]);
-            }
+            var now = DateTime.Now;
+            DbCom.CommandText = "INSERT INTO Orders (SeatedTable_Id, Staff_Id, Created_At) VALUES (@table, @staff, @now) SELECT SCOPE_IDENTITY()";
+            DbCom.Parameters.AddWithValue("table", sTableId);
+            DbCom.Parameters.AddWithValue("staff", staffId);
+            DbCom.Parameters.AddWithValue("now", now);
+            decimal idDec = (decimal)DbCom.ExecuteScalar();
+            order = new((int)idDec, sTableId, staffId, now);
 
             CloseCon();
 
@@ -74,10 +73,10 @@ namespace DataLayer
             }
             if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
 
+            CloseCon();
+            OpenCon();
 
-            DbCom.Parameters.Clear();
-
-            DbCom.CommandText = "SELECT * FROM Orders Where SeatedTable_id = @sTableId";
+            DbCom.CommandText = "SELECT * FROM Orders Where SeatedTable_id = @sTableId and Saved_At is not NULL";
             DbCom.Parameters.AddWithValue("sTableId", sTableId);
 
             reader = DbCom.ExecuteReader();
@@ -91,7 +90,7 @@ namespace DataLayer
             CloseCon();
             return list;
         }
-        //Done
+        //TODO
         public double GetTotalPrice(int id)
         {
             double TotalPrice = 0;
@@ -99,7 +98,8 @@ namespace DataLayer
 
             DbCom.CommandText = "SELECT Orders.Id, SeatedTable_Id, Staff_Id, Orders.Created_At, Saved_At, Product_Id, Amount, Product_Price, OrderRules.Created_At as AddedRuleDate FROM Orders " +
                                 "INNER JOIN OrderRules on Order_Id = Orders.Id " +
-                                "WHERE SeatedTable_Id = @id and " +
+                                "INNER JOIN SeatedTables on SeatedTable_Id = SeatedTables.Id " +
+                                "WHERE SeatedTables.Table_Id = @id and " +
                                 "Saved_At is null and " +
                                 "OrderRules.Created_At >= Orders.Created_At";
             DbCom.Parameters.AddWithValue("id", id);
@@ -107,8 +107,9 @@ namespace DataLayer
 
             while(reader.Read())
             {
-                TotalPrice += (double)reader["Product_Price"];
+                TotalPrice += ((double)reader["Product_Price"] * (int)reader["Amount"]);
             }
+            CloseCon();
             return TotalPrice;
         }
         //Done
@@ -117,21 +118,57 @@ namespace DataLayer
             string lastOrderString = "";
             OpenCon();
 
+            DbCom.CommandText = "SELECT Table_Id FROM SeatedTables WHERE Id = @id";
+            DbCom.Parameters.AddWithValue("id", id);
+
+            reader = DbCom.ExecuteReader();
+            int tableId = 0;
+            while (reader.Read())
+            {
+                tableId = (int)reader[0];
+            }
+
+
+            CloseCon();
+            OpenCon();
+
             DbCom.CommandText = "SELECT TOP 1 Orders.Id, Orders.Staff_Id, Staff.Name, Orders.Saved_At, OrderRules.Created_At as AddedRuleDate FROM Orders " +
                                 "INNER JOIN OrderRules on Order_Id = Orders.Id " +
                                 "INNER JOIN Staff on Staff.Id = Orders.Staff_Id " +
-                                "WHERE SeatedTable_Id = @id and " +
+                                "INNER JOIN SeatedTables on SeatedTable_Id = SeatedTables.Id " +
+                                "WHERE SeatedTables.Table_Id = @id and " +
                                 "Saved_At is null and " +
                                 "OrderRules.Created_At >= Orders.Created_At " +
                                 "order by AddedRuleDate desc";
-            DbCom.Parameters.AddWithValue("id", id);
+            DbCom.Parameters.AddWithValue("id", tableId);
             reader = DbCom.ExecuteReader();
 
             while(reader.Read())
             {
                 lastOrderString = (string)reader["Name"] + " - " + ((DateTime)reader["AddedRuleDate"]).ToString("HH:mm:ss");
             }
+            CloseCon();
             return lastOrderString;
+        }
+        //Done
+        public OrderDTO GetOpenOrder(int id)
+        {
+            OrderDTO lastOrder = null;
+            OpenCon();
+
+            DbCom.CommandText = "SELECT * FROM Orders" +
+                " INNER JOIN SeatedTables on SeatedTable_Id = SeatedTables.Id" +
+                " WHERE SeatedTables.Table_Id = @id and Saved_At is null";
+            DbCom.Parameters.AddWithValue("id", id);
+            reader = DbCom.ExecuteReader();
+
+            while(reader.Read())
+            {
+                lastOrder = new OrderDTO((int)reader["Id"], (int)reader["SeatedTable_Id"], (int)reader["Staff_Id"], (DateTime)reader["Created_At"]);
+            }
+
+            CloseCon();
+            return lastOrder;
         }
         #endregion
 
