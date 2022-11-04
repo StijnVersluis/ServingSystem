@@ -36,10 +36,5 @@ namespace LogicLayer
             return new StaffDTO(Id, Name, UName, IsAdmin);
         }
 
-        //public string GetCode(IStaff istaff)
-        //{
-        //    return istaff.GetCode(this.ToDTO());
-        //}
-
     }
 }
