@@ -14,6 +14,7 @@ namespace InterfaceLayer
         public string GetLastOrderText(int id);
         public OrderDTO GetOpenOrder(int id);
         public OrderDTO CreateOrder(int id, int staffId);
+        public bool RemoveOrder(int id);
         public TableDTO Edit(TableDTO newTable);
     }
 }

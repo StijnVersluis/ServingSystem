@@ -46,7 +46,7 @@ namespace DataLayer
                 }
             }
             CloseCon();
-            if (staff != null) return staff.Id;
+            if (success) return staff.Id;
             else return 0;
         }
 

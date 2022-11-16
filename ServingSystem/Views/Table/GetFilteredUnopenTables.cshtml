@@ -1,0 +1,8 @@
+﻿@model List<TableViewModel>
+@{
+    Layout = "";
+}
+@foreach (TableViewModel table in Model)
+{
+    <text><button data-toggle="modal" data-target="#NewTableModal" class="btn list-group-item text-left" data-id="@table.Id" data-name="@table.Name">@table.Name</button></text>
+}

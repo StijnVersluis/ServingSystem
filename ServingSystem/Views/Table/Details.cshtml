@@ -6,30 +6,39 @@
     var AllOrders = ViewData["AllOrders"] as List<OrderViewModel>;
     var OpenOrderOrNull = ViewData["OpenOrder"] as OrderViewModel;
     var products = ViewData["Products"] as List<ProductViewModel>;
+    var TotalPrice = ViewData["TotalPrice"];
 }
 
-<h1>
-    Table @Model.Name
-</h1>
-<a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back to Tables</a>
+<a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back</a>
+<h1 class="table-title">Table @Model.Name</h1>
 <div>
+
+    @if (ViewData["error"] != null)
+    {
+        <div class="text-center">
+            <div class="alert alert-warning">@ViewData["error"]</div>
+        </div>
+    }
     <div id="TableDetailPageContent" class="row">
         <div id="AllOrderDetails" class="col-md-3">
             <div class="card">
-                <div class="card-header">Orders</div>
+                <div class="card-header"><h2 class="order-title">Orders - Total: &euro;@string.Format("{0:0.00}", @TotalPrice)<h2></h2></div>
                 <div class="card-body">
-                    @{ var i = 1; }
+                    @{
+                        var i = 1;
+                    }
                     @foreach (var order in AllOrders)
                     {
                         <div class="ordersItem border">
                             <h3>Order @i</h3>
-                            @foreach(var orderRule in order.OrderRules) {
+                            @foreach (var orderRule in order.OrderRules)
+                            {
                                 var price = string.Format("{0:0.00}", orderRule.Amount * orderRule.ProductPrice);
                                 <div class="">
                                     <div class="row">
                                         <div class="col-4">@orderRule.LinkedProduct.Name</div>
                                         <div class="col-2">@orderRule.Amount</div>
-                                        <div class="col-3">&euro; @price</div>
+                                        <div class="col-3">&euro;@price</div>
                                     </div>
                                 </div>
                             }
@@ -44,34 +53,44 @@
         </div>
         <div id="OpenOrderDetails" class="col-md-3">
             <div class="card">
-                <div class="card-header">Open Order</div>
                 @if (OpenOrderOrNull != null)
                 {
+                    var amountRules = 0;
+                    <div class="card-header bg-light-green">Order Opened</div>
                     <div class="card-body">
                         <div class="list-group">
                             @foreach (var orderRule in OpenOrderOrNull.OrderRules)
                             {
+                                amountRules++;
                                 var price = string.Format("{0:0.00}", orderRule.Amount * orderRule.ProductPrice);
                                 <div class="list-group-item">
                                     <div class="row">
                                         <div class="col-4">@orderRule.LinkedProduct.Name</div>
                                         <div class="col-2">@orderRule.Amount</div>
-                                        <div class="col-3">&euro; @string.Format("{0:0.00}", @orderRule.ProductPrice)</div>
                                         <div class="col-3">&euro; @price</div>
+                                        <div class="btn btn-danger" onclick="RemoveFromOrder(@Model.Id, @orderRule.ProductId)">X</div>
                                     </div>
                                 </div>
                             }
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="button" onclick="SaveOrder(@Model.Id)">Save Order</button>
+                        @if (amountRules > 0)
+                        {
+                            <a id="SaveOrderBtn" class="btn btn-success" asp-controller="Order" asp-action="Save" asp-route-id="@Model.Id">Save Order</a>
+                        }
+                        else
+                        {
+                            <a id="RemoveOrderBtn" class="btn btn-success" asp-controller="Table" asp-action="RemoveOrder" asp-route-id="@Model.Id">Remove Order</a>
+                        }
                     </div>
                 }
                 else
                 {
+                    <div class="card-header bg-light-red">No Order Opened</div>
                     <div class="card-body"></div>
                     <div class="card-footer">
-                        <button type="button" onclick="CreateOrder(@Model.Id)">Create Order</button>
+                        <a id="CreateOrderBtn" class="btn btn-success" asp-action="CreateOrder" asp-route-id="@Model.Id">Create Order</a>
                     </div>
                 }
             </div>
@@ -92,9 +111,12 @@
                                         <div class="col-4">
                                             &euro;@string.Format("{0:0.00}", @product.Price)
                                         </div>
-                                        <div class="col-4">
-                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
-                                        </div>
+                                        @if (OpenOrderOrNull != null)
+                                        {
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             }
@@ -115,9 +137,12 @@
                                         <div class="col-4">
                                             &euro;@string.Format("{0:0.00}", @product.Price)
                                         </div>
-                                        <div class="col-4">
-                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
-                                        </div>
+                                        @if (OpenOrderOrNull != null)
+                                        {
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             }
@@ -138,9 +163,12 @@
                                         <div class="col-4">
                                             &euro;@string.Format("{0:0.00}", @product.Price)
                                         </div>
-                                        <div class="col-4">
-                                            <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
-                                        </div>
+                                        @if (OpenOrderOrNull != null)
+                                        {
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-success" onclick="AddToOrder(@Model.Id, @product.Id)">+</button>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             }

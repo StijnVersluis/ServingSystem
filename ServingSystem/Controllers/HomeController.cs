@@ -30,14 +30,11 @@ namespace ServingSystem.Controllers
 
         public IActionResult Index()
         {
-            if (IsLoggedIn())
-            {
-                ViewData["CurrentStaff"] = new StaffViewModel(staffContainer.GetLoggedInStaff((int)HttpContext.Session.GetInt32("UserId")));
-                ViewData["AllNonSeatedTables"] = tableContainer.GetAllNonSeatedTables().ConvertAll(x => new TableViewModel(x));
-                ViewData["SeatedTables"] = tableContainer.GetAllSeatedTables().ConvertAll(x => new TableViewModel(x, x.Time_Arrived));
-                return View();
-            }
-            else return RedirectToAction("Login");
+            if (!IsLoggedIn()) return RedirectToAction("Login");
+            ViewData["CurrentStaff"] = new StaffViewModel(staffContainer.GetLoggedInStaff((int)HttpContext.Session.GetInt32("UserId")));
+            ViewData["AllNonSeatedTables"] = tableContainer.GetAllNonSeatedTables().ConvertAll(x => new TableViewModel(x));
+            ViewData["SeatedTables"] = tableContainer.GetAllSeatedTables().ConvertAll(x => new TableViewModel(x, x.Time_Arrived));
+            return View();
         }
 
         [HttpPost]

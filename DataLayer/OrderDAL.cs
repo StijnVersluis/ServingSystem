@@ -26,7 +26,7 @@ namespace DataLayer
 
                 reader = DbCom.ExecuteReader();
                 int amount = 0;
-                while(reader.Read())
+                while (reader.Read())
                 {
                     amount = (int)reader["Amount"];
                 }
@@ -39,7 +39,7 @@ namespace DataLayer
                     DbCom.CommandText = "UPDATE OrderRules SET Amount = @amount WHERE Order_Id = @orderId AND Product_Id = @productId";
                     DbCom.Parameters.AddWithValue("orderId", orderId);
                     DbCom.Parameters.AddWithValue("productId", product.Id);
-                    DbCom.Parameters.AddWithValue("amount", amount+1);
+                    DbCom.Parameters.AddWithValue("amount", amount + 1);
 
                     DbCom.ExecuteNonQuery();
                 }
@@ -90,9 +90,53 @@ namespace DataLayer
 
         public bool RemoveProduct(int id, int productId)
         {
-            //OpenCon();
-            throw new NotImplementedException();
-            //CloseCon();
+            try
+            {
+                OpenCon();
+
+                DbCom.CommandText = "SELECT * FROM OrderRules WHERE Order_Id = @orderId and Product_Id = @productId";
+                DbCom.Parameters.AddWithValue("orderId", id);
+                DbCom.Parameters.AddWithValue("productId", productId);
+
+                reader = DbCom.ExecuteReader();
+                int amount = 0;
+                while (reader.Read())
+                {
+                    amount = (int)reader["Amount"];
+                }
+
+                if (amount > 1)
+                {
+                    CloseCon();
+                    OpenCon();
+                    DbCom.Parameters.Clear();
+                    DbCom.CommandText = "UPDATE OrderRules SET Amount = @amount WHERE Order_Id = @orderId AND Product_Id = @productId";
+                    DbCom.Parameters.AddWithValue("orderId", id);
+                    DbCom.Parameters.AddWithValue("productId", productId);
+                    DbCom.Parameters.AddWithValue("amount", amount - 1);
+
+                    DbCom.ExecuteNonQuery();
+                } else
+                {
+                    CloseCon();
+                    OpenCon();
+                    DbCom.Parameters.Clear();
+                    DbCom.CommandText = "DELETE FROM OrderRules WHERE Order_Id = @orderId AND Product_Id = @productId";
+                    DbCom.Parameters.AddWithValue("orderId", id);
+                    DbCom.Parameters.AddWithValue("productId", productId);
+
+                    DbCom.ExecuteNonQuery();
+                }
+
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally { CloseCon(); }
         }
 
         public bool SaveOrder(int id)
@@ -112,6 +156,7 @@ namespace DataLayer
             CloseCon();
             return success;
         }
+
         #endregion
     }
 }

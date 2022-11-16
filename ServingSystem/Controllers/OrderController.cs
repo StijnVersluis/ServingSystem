@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using LogicLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServingSystem.Controllers
@@ -13,26 +14,62 @@ namespace ServingSystem.Controllers
         private readonly StaffContainer userContainer = new(new StaffDAL());
         public IActionResult Index()
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             return View();
         }
-
 
         [HttpPost]
         public ActionResult AddProduct([FromBody] OrderProductJson collection)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             var order = tableContainer.GetTable(collection.TableId).GetOpenOrder(tDAL);
-            order.AddProduct(oDAL, productContainer.GetProduct(collection.ProductId));
-            return View("GetProducts", new {id=order.Id});
+            if (order != null)
+            {
+                order.AddProduct(oDAL, productContainer.GetProduct(collection.ProductId));
+                return View("GetProducts", new { id = order.Id });
+            } else
+            {
+                return RedirectToAction("Details", "Table", new { id = collection.TableId, error = "Please create an order!" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RemoveProduct([FromBody] OrderProductJson collection)
+        {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+            var order = tableContainer.GetTable(collection.TableId).GetOpenOrder(tDAL);
+            if (order != null)
+            {
+                order.RemoveProduct(oDAL, collection.ProductId);
+                return View("GetProducts", new { id = order.Id });
+            } else
+            {
+                return RedirectToAction("Details", "Table", new { id = collection.TableId, error = "Please create an order!" });
+            }
         }
 
         public ActionResult GetProducts(int id)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             return View();
         }
 
-        public void Save(int id)
+        public ActionResult Save(int id)
         {
-            tableContainer.GetTable(id).GetOpenOrder(tDAL).SaveOrder(oDAL);
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+            var order = tableContainer.GetTable(id).GetOpenOrder(tDAL);
+            if (order != null )
+            {
+                order.SaveOrder(oDAL);
+            }
+            return RedirectToAction("Details", "Table", new { id });
+        }
+
+        public bool IsLoggedIn()
+        {
+            var loggedInId = HttpContext.Session.GetInt32("UserId");
+            if (loggedInId != null && loggedInId != 0) return true;
+            else return false;
         }
     }
 }

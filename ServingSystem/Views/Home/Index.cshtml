@@ -45,7 +45,7 @@
 </div>
 <div class="">
     <h1 class="">@staff.Name</h1>
-    <div class="row">
+    <div class="row ml-0">
         <div class="container p-1 col-md-9" id="TableViewContainer">
             <h2 class="mb-5 open-table-label">Opened tables:</h2>
             <div id="TableListHeader" class="row mx-2">
@@ -58,16 +58,16 @@
                 @{
                     foreach (TableViewModel table in ViewData["SeatedTables"] as List<TableViewModel>)
                     {
-                            <text>
-                                <a class="list-group-item" asp-controller="Table" asp-action="Details" asp-route-id="@table.Id">
-                                    <div class="row">
-                                        <div class="col-2">@table.Name</div>
-                                        <div class="col-4">@table.GetLastOrderText()</div>
-                                        <div class="col-3">&euro; @String.Format("{0:0.00}", @table.GetTotalPrice())</div>
-                                        <div class="col-3">@table.Time_Arrived.ToString("HH:mm:ss")</div>
-                                    </div>
-                                </a>
-                            </text>
+                        <text>
+                            <a class="list-group-item" asp-controller="Table" asp-action="Details" asp-route-id="@table.Id">
+                                <div class="row">
+                                    <div class="col-2">@table.Name</div>
+                                    <div class="col-4">@table.GetLastOrderText()</div>
+                                    <div class="col-3">&euro; @String.Format("{0:0.00}", @table.GetTotalPrice())</div>
+                                    <div class="col-3">@table.Time_Arrived.ToString("HH:mm:ss")</div>
+                                </div>
+                            </a>
+                        </text>
                     }
                 }
             </div>
@@ -76,16 +76,16 @@
             <h2>New tables:</h2>
             <div class="table-searchbar" id="NewTableSearchbar">
                 <div class="input-group mb-3">
-                    <input type="text" name="NewTableName" class="form-control" placeholder="Table name">
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input id="UnopenedTableFilterInput" type="text" name="NewTableName" class="form-control" placeholder="Table name" onchange="FilterUnopenedTables()">
+                    <div class="input-group-append cursor-pointer" onclick="EmptyFilter()">
+                        <span class="input-group-text" id="basic-addon1">X</span>
                     </div>
                 </div>
                 <div id="NewTableList" class="list-group mt-2">
                     @{
                         foreach (TableViewModel table in ViewData["AllNonSeatedTables"] as List<TableViewModel>)
                         {
-                                <text><button data-toggle="modal" data-target="#NewTableModal" class="btn list-group-item text-left" data-id="@table.Id" data-name="@table.Name">@table.Name</button></text>
+                            <text><button data-toggle="modal" data-target="#NewTableModal" class="btn list-group-item text-left" data-id="@table.Id" data-name="@table.Name">@table.Name</button></text>
                         }
                     }
                 </div>

@@ -33,6 +33,21 @@ function AddToOrder(tableId, productId) {
         .then(data => window.location.reload(true))
 }
 
+function RemoveFromOrder(tableId, productId) {
+    fetch(window.location.origin + "/Order/RemoveProduct", {
+        method: "POST",
+        body: JSON.stringify({
+            tableid: tableId,
+            productid: productId
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .then(resp => resp.text())
+        .then(data => window.location.reload(true))
+}
+
 
 function CreateOrder(tableId) {
     fetch(window.location.origin + "/Table/CreateOrder", {
@@ -44,11 +59,35 @@ function CreateOrder(tableId) {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
+        .then(resp => resp.text())
+        .then(() => {
+            $("#SaveOrderBtn").removeClass("d-none")
+            $("#CreateOrderBtn").addClass("d-none")
+        })
         .then(window.location.reload(true))
 }
 
 function SaveOrder(tableId) {
     fetch(window.location.origin + "/Order/Save/" + tableId)
         .then(resp => resp.text())
-        .then(data => window.location.reload(true))
+        .then(() => {
+            $("#SaveOrderBtn").addClass("d-none")
+            $("#CreateOrderBtn").removeClass("d-none")
+        })
+        .then(window.location.reload(true))
+}
+
+function FilterUnopenedTables() {
+    let value = $("#UnopenedTableFilterInput").val();
+    fetch(window.location.origin + "/Table/GetFilteredUnopenTables?filter=" + value)
+        .then(resp => resp.text())
+        .then(data => {
+            $("#NewTableList").html("");
+            $("#NewTableList").html(data);
+        })
+}
+
+function EmptyFilter() {
+    $("#UnopenedTableFilterInput").val("");
+    FilterUnopenedTables();
 }

@@ -88,6 +88,16 @@ namespace LogicLayer
         }
 
         ///<summary>
+        /// Create order and add to table.
+        /// </summary>
+        /// <param name="staffId">The id of the staff member logged in.</param>
+        /// <returns>The newly created order.</returns>
+        public bool RemoveOrder(ITable iTable)
+        {
+            return iTable.RemoveOrder(this.GetOpenOrder(iTable).Id);
+        }
+
+        ///<summary>
         /// Edit Table in database
         /// </summary>
         /// <returns>The recently edited Table</returns>

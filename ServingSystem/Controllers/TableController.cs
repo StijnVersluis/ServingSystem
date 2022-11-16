@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using ServingSystem.Models;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Builder;
+using System.Linq;
 
 namespace ServingSystem.Controllers
 {
@@ -19,35 +21,54 @@ namespace ServingSystem.Controllers
         private readonly StaffContainer userContainer = new(new StaffDAL());
 
         // GET: TableController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string ?error)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+
             Table table = tableContainer.GetTable(id);
             var openOrder = table.GetOpenOrder(tDAL);
             if (openOrder != null)
             {
                 ViewData["OpenOrder"] = new OrderViewModel(openOrder, openOrder.GetProducts(oDAL));
             }
+            ViewData["Error"] = error;
             ViewData["Products"] = productContainer.GetAll().ConvertAll(x => new ProductViewModel(x));
             ViewData["AllOrders"] = table.GetOrders(tDAL).ConvertAll(x => new OrderViewModel(x, x.GetProducts(oDAL)));
+            ViewData["TotalPrice"] = table.GetTotalPrice(tDAL);
             return View(new TableViewModel(table, table.Time_Arrived));
         }
 
-        // GET: TableController/Create
         public ActionResult CloseTable(int id)
         {
-            tableContainer.CloseTable(id);
-            return RedirectToAction("Index", "Home");
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+            var order = tableContainer.GetTable(id).GetOpenOrder(tDAL);
+            if (order == null) {
+                tableContainer.CloseTable(id);
+                return RedirectToAction("Index", "Home");
+            } else
+            {
+                return RedirectToAction("Details", "Table", new { id = id, error = "Please Save last order!" });
+            }
         }
 
-        [HttpPost]
-        public void CreateOrder([FromBody] OrderProductJson collection)
+        public ActionResult CreateOrder(int id)
         {
-            tableContainer.GetTable(collection.TableId).CreateOrder(tDAL, (int)HttpContext.Session.GetInt32("UserId"));
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+            tableContainer.GetTable(id).CreateOrder(tDAL, (int)HttpContext.Session.GetInt32("UserId"));
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        public ActionResult RemoveOrder(int id)
+        {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+            tableContainer.GetTable(id).RemoveOrder(tDAL);
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         // GET: TableController/Create
         public ActionResult Create()
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             return View();
         }
 
@@ -56,6 +77,7 @@ namespace ServingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             collection.TryGetValue("Name", out var name);
             try
             {
@@ -71,6 +93,7 @@ namespace ServingSystem.Controllers
         // GET: TableController/Edit/5
         public ActionResult Edit(int id)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             return View();
         }
 
@@ -79,6 +102,7 @@ namespace ServingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             try
             {
                 return RedirectToAction("Index", "Home");
@@ -92,6 +116,7 @@ namespace ServingSystem.Controllers
         // GET: TableController/Delete/5
         public ActionResult Delete(int id)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             return View();
         }
 
@@ -100,6 +125,7 @@ namespace ServingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
             try
             {
                 return RedirectToAction("Index", "Home");
@@ -108,6 +134,23 @@ namespace ServingSystem.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult GetFilteredUnopenTables(string filter)
+        {
+            if (filter == null || filter == "") return View(tableContainer.GetAllNonSeatedTables().ConvertAll(table => new TableViewModel(table)));
+            var tables = tableContainer.GetAllNonSeatedTables()
+                .Where(table => table.Name.ToLower().Contains(filter.ToLower()))
+                .ToList()
+                .ConvertAll(table => new TableViewModel(table.Name));
+            return View(tables);
+        }
+
+        public bool IsLoggedIn()
+        {
+            var loggedInId = HttpContext.Session.GetInt32("UserId");
+            if (loggedInId != null && loggedInId != 0) return true;
+            else return false;
         }
     }
     public class OrderProductJson
