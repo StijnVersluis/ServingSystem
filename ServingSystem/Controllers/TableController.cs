@@ -47,7 +47,7 @@ namespace ServingSystem.Controllers
                 return RedirectToAction("Index", "Home");
             } else
             {
-                return RedirectToAction("Details", "Table", new { id = id, error = "Please Save last order!" });
+                return RedirectToAction("Details", "Table", new { id = id, error = "Please Save or Remove last order!" });
             }
         }
 

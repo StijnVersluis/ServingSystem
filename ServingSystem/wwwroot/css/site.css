@@ -111,5 +111,31 @@ body {
 }
 
 .order-title {
+    font-size: 1.3rem;
+}
+
+.order-list-item {
     font-size: 1.2rem;
+}
+
+.product-title {
+    font-size: 1.5rem;
+}
+
+.product-list {
+    margin-top: 10px;
+}
+
+.product-list-title {
+    font-size: 1.2rem;
+}
+
+hr {
+    height: 2px;
+    background-color: var(--success);
+    border: none;
+}
+
+.btn {
+    border-radius: 10px !important;
 }

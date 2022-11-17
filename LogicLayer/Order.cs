@@ -15,6 +15,14 @@ namespace LogicLayer
         public int StaffId;
         public DateTime CreatedAt;
 
+        public Order(int id, int seatedTableId, int staffId, DateTime createdAt)
+        {
+            this.Id = id;
+            this.SeatedTableId = seatedTableId;
+            this.StaffId = staffId;
+            this.CreatedAt = createdAt;
+        }
+
         public Order(OrderDTO order)
         {
             Id = order.Id;

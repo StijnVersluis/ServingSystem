@@ -87,6 +87,12 @@ function FilterUnopenedTables() {
         })
 }
 
+function CloseTable(tableId) {
+    if (confirm("Close Table?")) {
+        window.location = "/Table/CloseTable/" + tableId;
+    }
+}
+
 function EmptyFilter() {
     $("#UnopenedTableFilterInput").val("");
     FilterUnopenedTables();
