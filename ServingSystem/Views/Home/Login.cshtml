@@ -7,27 +7,32 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     @*Create Login Page*@
-    @if (ViewData["error"] != null)
+    @if (@Model != null && @Model.ErrorMsgs.Count > 0)
     {
-        <div class="alert alert-danger">@ViewData["error"]</div>
+        <div class="alert alert-danger">
+            @foreach (string error in Model.ErrorMsgs)
+            {
+                <p>@error</p>
+            }
+        </div>
     }
-        <div class="col-md-6 m-auto">
-            
+    <div class="col-md-6 m-auto">
+
         <form asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" required/>
+                <input asp-for="UserName" class="form-control" required />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" required/>
+                <input asp-for="Password" class="form-control" type="password" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>
-        </div>
+    </div>
 </div>

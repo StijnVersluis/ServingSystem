@@ -4,6 +4,9 @@
 // Write your JavaScript code.
 
 // Open a Table via the modal
+$(document).ready(function () {
+    if ($("#priceInput").length > 0) $("#priceInput").val($("#priceInput").val().replace(",", "."))
+})
 
 $('#NewTableModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -96,4 +99,8 @@ function CloseTable(tableId) {
 function EmptyFilter() {
     $("#UnopenedTableFilterInput").val("");
     FilterUnopenedTables();
+}
+
+function numberInputKommaToDot() {
+
 }

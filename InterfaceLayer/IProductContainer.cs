@@ -12,7 +12,8 @@ namespace InterfaceLayer
         public List<ProductDTO> GetAll();
         public List<ProductDTO> GetAllOfType(int type);
         public ProductDTO GetProduct(int Id);
-        public ProductDTO CreateProduct(ProductDTO product);
+        public bool CreateProduct(ProductDTO product);
         public bool DeleteProduct(int id);
+        public List<ProductTypeDTO> GetAllTypes();
     }
 }

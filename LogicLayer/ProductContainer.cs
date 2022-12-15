@@ -47,9 +47,9 @@ namespace LogicLayer
         /// </summary>
         /// <param name="product">Product to be Created.</param>
         /// <returns>The newly create Product.</returns>
-        public Product CreateProduct(Product product)
+        public bool CreateProduct(Product product)
         {
-            return new Product(iProductContainer.CreateProduct(product.ToDTOWithoutId()));
+            return iProductContainer.CreateProduct(product.ToDTOWithoutId());
         }
 
         /// <summary>
@@ -60,6 +60,20 @@ namespace LogicLayer
         public bool DeleteProduct(int id)
         {
             return iProductContainer.DeleteProduct(id);
+        }
+
+        public List<ProductType> GetAllTypes()
+        {
+            return iProductContainer.GetAllTypes().ConvertAll(typeDTO => new ProductType(typeDTO));
+        }
+
+        public bool CheckProduct(Product product)
+        {
+            if (product == null) return false;
+            if (product.Name == "") return false;
+            if (Math.Round(product.Price, 2) <= 0) return false;
+            if (product.Type < 1 || product.Type > 3) return false;
+            return true;
         }
     }
 

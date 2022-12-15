@@ -9,9 +9,9 @@ namespace InterfaceLayer.DTO
     public class ProductDTO
     {
         public int Id { private set; get; }
-        public string Name { private set; get; }
-        public double Price { private set; get; }
-        public int Type { private set; get; }
+        public string Name { set; get; }
+        public double Price { set; get; }
+        public int Type { set; get; }
 
         public ProductDTO(int id, string name, double price, int type)
         {

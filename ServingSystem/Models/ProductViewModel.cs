@@ -1,18 +1,32 @@
-﻿using LogicLayer;
-using Microsoft.CodeAnalysis;
+﻿using DataLayer;
+using LogicLayer;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServingSystem.Models
 {
     public class ProductViewModel
     {
-        public int Id { get; set; }
+        public int Id { set; get; }
         [Required]
-        public string Name { get; set; }
+        [MinLength(5)]
+        public string Name { set; get; }
         [Required]
-        public double Price { get; set; }
-        [Required]
-        public int ProductType { get; set; }
+        public double Price { set; get; }
+        [Range(1,3)]
+        public int ProductType { set; get; }
+
+        [DisplayName("Product Type")]
+        public string ProductTypeName { set; get; }
+
+        public ProductViewModel(int id, string name, double price, int producttype)
+        {
+            Id = id;
+            Name = name;
+            Price = price;
+            ProductType = producttype;
+        }
 
         public ProductViewModel(Product product)
         {
@@ -20,6 +34,7 @@ namespace ServingSystem.Models
             Name = product.Name;
             Price = product.Price;
             ProductType = product.Type;
+            ProductTypeName = product.GetProductTypeName(new ProductDAL());
         }
     }
 }

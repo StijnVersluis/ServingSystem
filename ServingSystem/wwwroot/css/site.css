@@ -139,3 +139,11 @@ hr {
 .btn {
     border-radius: 10px !important;
 }
+
+.bg-none {
+    background:none;
+}
+
+.clickable-curser:hover {
+    cursor: pointer
+}

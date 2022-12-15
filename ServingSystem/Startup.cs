@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ServingSystem.Data;
 
 namespace ServingSystem
 {
@@ -28,8 +30,11 @@ namespace ServingSystem
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 //options.Cookie.HttpOnly = true;
-                //options.Cookie.IsEssential = true;
+                options.Cookie.IsEssential = true;
             });
+
+            services.AddDbContext<ServingSystemContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ServingSystemContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +58,6 @@ namespace ServingSystem
             app.UseRouting();
 
             app.UseAuthorization();
-
 
             app.UseEndpoints(endpoints =>
             {

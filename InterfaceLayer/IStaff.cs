@@ -10,5 +10,6 @@ namespace InterfaceLayer
     public interface IStaff
     {
         //public string GetCode(StaffDTO staff);
+        public StaffDTO Edit(StaffDTO staff);
     }
 }

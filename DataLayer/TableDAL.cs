@@ -185,12 +185,13 @@ namespace DataLayer
             {
                 OpenCon();
 
-                DbCom.CommandText = "SELECT TOP 1 Orders.Id, Orders.Staff_Id, Staff.Name, Orders.Saved_At, OrderRules.Created_At as AddedRuleDate FROM Orders " +
+                DbCom.CommandText = "SELECT TOP 1 Orders.Id, Orders.Staff_Id, Staff.Name, Orders.Saved_At, OrderRules.Created_At as AddedRuleDate, SeatedTables.Time_Arrived, SeatedTables.Time_Left FROM Orders " +
                                 "INNER JOIN OrderRules on Order_Id = Orders.Id " +
                                 "INNER JOIN Staff on Staff.Id = Orders.Staff_Id " +
                                 "INNER JOIN SeatedTables on SeatedTable_Id = SeatedTables.Id " +
                                 "WHERE SeatedTables.Table_Id = @id and " +
-                                "OrderRules.Created_At >= Orders.Created_At " +
+                                "Orders.Saved_At >= SeatedTables.Time_Arrived and "+
+                                "Time_Left is null " +
                                 "order by AddedRuleDate desc";
                 DbCom.Parameters.AddWithValue("id", tableId);
                 reader = DbCom.ExecuteReader();
@@ -199,6 +200,7 @@ namespace DataLayer
                 {
                     lastOrderString = (string)reader["Name"] + " - " + ((DateTime)reader["AddedRuleDate"]).ToString("HH:mm:ss");
                 }
+                if (string.IsNullOrEmpty(lastOrderString)) lastOrderString = "No Orders Yet.";
             }
             catch (Exception e) { }
             finally { CloseCon(); }

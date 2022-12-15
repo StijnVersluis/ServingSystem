@@ -1,12 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     var staff = ViewData["CurrentStaff"] as StaffViewModel;
-    var createTableLink = "";
-
-    if (staff.IsAdmin)
-    {
-        createTableLink = "<a asp-action=\"Create\" asp-controller=\"Table\" class=\"btn btn-success\">Create New Table</a>";
-    }
 }
 
 <div class="modal fade" id="NewTableModal" tabindex="-1" role="form" aria-labelledby="NewTableModalLabel" aria-hidden="true">
@@ -89,8 +83,21 @@
                         }
                     }
                 </div>
-                @createTableLink
+                @if (staff.IsAdmin)
+                {
+                    <a asp-action="Create" asp-controller="Table" class="btn btn-success">Create New Table</a>
+                }
             </div>
         </div>
     </div>
+    @if (staff.IsAdmin)
+    {
+        <div class="mt-5">
+            <h2 class="display-4">Administrator Functions</h2>
+            <div>
+                <a asp-action="Index" asp-controller="Staff" class="btn btn-info">See and Edit Users</a>
+                <a asp-action="Index" asp-controller="Product" class="btn btn-info">See and Edit Products</a>
+            </div>
+        </div>
+    }
 </div>

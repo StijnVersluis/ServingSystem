@@ -1,6 +1,7 @@
-﻿@{
-    var container = ViewData["containerType"];
-    if (container == null) container = "container";
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var container = ViewData["ContainerType"] == null ? "container" : ViewData["containerType"];
+    var loggedOut = ViewData["LoggedOut"] != null;
 }
 
 <!DOCTYPE html>
@@ -29,9 +30,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                        </li>
+                        @if (!loggedOut)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
