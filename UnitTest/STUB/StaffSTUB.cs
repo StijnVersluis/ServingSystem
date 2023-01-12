@@ -12,6 +12,7 @@ namespace UnitTest.STUB
     public class StaffSTUB : IStaffContainer, IStaff
     {
         public StaffDTO loggedInStaff;
+        /// <summary>A List of staff</summary>
         public List<StaffDTO> staffList;
 
         public StaffSTUB()

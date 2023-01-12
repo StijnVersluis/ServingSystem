@@ -8,9 +8,9 @@ namespace InterfaceLayer.DTO
 {
     public class TableDTO
     {
-        public int Id { private set; get; }
-        public string Name { private set; get; }
-        public DateTime Time_Arrived { private set; get; }
+        public int Id { set; get; }
+        public string Name { set; get; }
+        public DateTime Time_Arrived { set; get; }
         
         public TableDTO(int id, string name)
         {
@@ -22,10 +22,6 @@ namespace InterfaceLayer.DTO
             Id = id;
             Name = name;
             Time_Arrived = time_arrived;
-        }
-        public double GetPrice()
-        {
-            throw new NotImplementedException();
         }
     }
 }

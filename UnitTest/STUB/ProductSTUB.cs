@@ -12,7 +12,9 @@ namespace UnitTest.STUB
 {
     public class ProductSTUB : IProductContainer, IProduct
     {
+        /// <summary>A List of products.</summary>
         public List<ProductDTO> productList;
+        /// <summary>A List of product types.</summary>
         public List<ProductTypeDTO> typeList = new List<ProductTypeDTO>()
             {
                 new ProductTypeDTO(1, "Food"),

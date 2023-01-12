@@ -16,6 +16,16 @@ namespace UnitTest
     public class ProductTests
     {
         [TestMethod]
+        public void ConstructorTest()
+        {
+            var Product = new Product(1, "Cola", 2.99, 1);
+
+            Assert.AreEqual(1, Product.Id);
+            Assert.AreEqual("Cola", Product.Name);
+            Assert.AreEqual(1, Product.Id);
+            Assert.AreEqual(1, Product.Id);
+        }
+        [TestMethod]
         public void GetAllProductsTest()
         {
             var stub = new ProductSTUB();
@@ -25,7 +35,7 @@ namespace UnitTest
 
             for (int i = 0; i < productList.Count; i++)
             {
-                productList[i] = stub.productList[i];
+                Assert.AreEqual(expected[i], productList[i]);
             }
         }
         [TestMethod]
@@ -36,7 +46,7 @@ namespace UnitTest
             var product = new Product("Beer", 2.99, 3);
 
             Assert.IsTrue(stub.CreateProduct(product.ToDTOWithoutId()));
-            Assert.IsTrue(previousListCount < stub.GetAll().Count);
+            Assert.AreEqual(previousListCount, stub.GetAll().Count -1);
         }
         [TestMethod]
         public void DeleteProductTest()
@@ -45,18 +55,20 @@ namespace UnitTest
             var previousListCount = stub.productList.Count;
 
             Assert.IsTrue(stub.DeleteProduct(1));
-            Assert.IsTrue(previousListCount > stub.GetAll().Count);
+            Assert.AreEqual(previousListCount, stub.GetAll().Count + 1);
         }
         [TestMethod]
         public void EditProductTest()
         {
+            //arrange
             var stub = new ProductSTUB();
             var product = new Product(stub.GetProduct(1));
             var previousPrice = product.Price;
-            product.Price = product.Price - 1;
+            var minPrice = 1;
+            product.Price = product.Price - minPrice;
 
             Assert.IsTrue(product.Edit(stub));
-            Assert.IsTrue(stub.GetProduct(1).Price != previousPrice);
+            Assert.AreEqual(stub.GetProduct(1).Price, previousPrice - minPrice);
         }
         [TestMethod]
         public void GetProductTest()
@@ -99,15 +111,9 @@ namespace UnitTest
             Assert.AreEqual(expectedProducts.Count, productsOfType.Count);
             for (int i = 0; i < productsOfType.Count; i++)
             {
-                Assert.AreEqual(
-                    expectedProducts[i].Id, productsOfType[i].Id
-                    );
-                Assert.AreEqual(
-                    expectedProducts[i].Name, productsOfType[i].Name
-                    );
-                Assert.AreEqual(
-                    expectedProducts[i].Price, productsOfType[i].Price
-                    );
+                Assert.AreEqual(expectedProducts[i].Id, productsOfType[i].Id);
+                Assert.AreEqual(expectedProducts[i].Name, productsOfType[i].Name);
+                Assert.AreEqual(expectedProducts[i].Price, productsOfType[i].Price);
             }
         }
     }

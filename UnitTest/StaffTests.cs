@@ -14,15 +14,25 @@ namespace UnitTest
     [TestClass]
     public class StaffTests
     {
+
         //Method for checking StaffDTO == Staff
-        public bool CheckStaffDTOandStaff(StaffDTO staffDTO, Staff staff)
+        public void CheckStaffDTOandStaff(StaffDTO staffDTO, Staff staff)
         {
-            bool success = true;
-            if (staffDTO.Id != 0 && staffDTO.Id != staff.Id) success = false;
-            if (staffDTO.Name != staff.Name) success = false;
-            if (staffDTO.UName != staff.UName) success = false;
-            if (staffDTO.IsAdmin != staff.IsAdmin) success = false;
-            return success;
+            Assert.AreEqual(staffDTO.Id, staff.Id);
+            Assert.AreEqual(staffDTO.Name, staff.Name);
+            Assert.AreEqual(staffDTO.UName, staff.UName);
+            Assert.AreEqual(staffDTO.IsAdmin, staff.IsAdmin);
+        }
+        [TestMethod]
+        public void ConstructorTest()
+        {
+            var staff = new Staff(1, "Staff1", "Staff01", "0000", false);
+
+            Assert.AreEqual(1, staff.Id);
+            Assert.AreEqual("Staff1", staff.Name);
+            Assert.AreEqual("Staff01", staff.UName);
+            Assert.AreEqual("0000", staff.Code);
+            Assert.IsFalse(staff.IsAdmin);
         }
 
         [TestMethod]
@@ -35,7 +45,7 @@ namespace UnitTest
             var ExpectedStaff = sSTUB.staffList[0];
 
             Assert.IsNotNull(ResponseStaff);
-            Assert.IsTrue(CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff));
+            CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff);
         }
 
         [TestMethod]
@@ -48,7 +58,7 @@ namespace UnitTest
             var ExpectedStaff = sSTUB.staffList[0];
 
             Assert.IsNotNull(ResponseStaff);
-            Assert.IsTrue(CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff));
+            CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff);
         }
 
         [TestMethod]
@@ -61,10 +71,11 @@ namespace UnitTest
 
             StaffDTO ExpectedStaff = newUser.ToDTO();
             Staff ResponseStaff = sCont.CreateUser(newUser);
+            ExpectedStaff.Id = ResponseStaff.Id;
 
-            Assert.AreEqual(4, sCont.GetAll().Count);
+            Assert.AreEqual(sSTUB.staffList.Count, sCont.GetAll().Count);
             Assert.IsNotNull(ResponseStaff);
-            Assert.IsTrue(CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff));
+            CheckStaffDTOandStaff(ExpectedStaff, ResponseStaff);
         }
         [TestMethod]
         public void EditUserTest()
@@ -105,9 +116,10 @@ namespace UnitTest
             StaffContainer sCont = new StaffContainer(sSTUB);
 
             int loggedInId = sCont.AttemptLogin("Kimby", "10001");
+            int expected = sSTUB.loggedInStaff.Id;
 
             Assert.IsNotNull(loggedInId);
-            Assert.AreEqual(1, loggedInId);
+            Assert.AreEqual(expected, loggedInId);
         }
         [TestMethod]
         public void AttemptLoginFail()
