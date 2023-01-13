@@ -41,8 +41,9 @@ namespace DataLayer
                 if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
 
             }
-            catch (Exception e) {
-                Console.Error.WriteLine(e.Message);
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
             }
             finally { CloseCon(); }
             try
@@ -59,7 +60,10 @@ namespace DataLayer
                 order = new((int)idDec, sTableId, staffId, now);
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return order;
         }
@@ -78,7 +82,10 @@ namespace DataLayer
                     success = true;
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally
             {
                 CloseCon();
@@ -111,7 +118,10 @@ namespace DataLayer
                 if (sTableId == 0) throw new Exception("Table has not been Seated! Or another problem occured.");
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             try
             {
@@ -129,7 +139,10 @@ namespace DataLayer
                 }
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return list;
         }
@@ -156,7 +169,10 @@ namespace DataLayer
                 }
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return TotalPrice;
         }
@@ -179,7 +195,10 @@ namespace DataLayer
                 }
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             try
             {
@@ -190,7 +209,7 @@ namespace DataLayer
                                 "INNER JOIN Staff on Staff.Id = Orders.Staff_Id " +
                                 "INNER JOIN SeatedTables on SeatedTable_Id = SeatedTables.Id " +
                                 "WHERE SeatedTables.Table_Id = @id and " +
-                                "Orders.Saved_At >= SeatedTables.Time_Arrived and "+
+                                "Orders.Saved_At >= SeatedTables.Time_Arrived and " +
                                 "Time_Left is null " +
                                 "order by AddedRuleDate desc";
                 DbCom.Parameters.AddWithValue("id", tableId);
@@ -202,7 +221,10 @@ namespace DataLayer
                 }
                 if (string.IsNullOrEmpty(lastOrderString)) lastOrderString = "No Orders Yet.";
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return lastOrderString;
         }
@@ -225,7 +247,10 @@ namespace DataLayer
                     lastOrder = new OrderDTO((int)reader["Id"], (int)reader["SeatedTable_Id"], (int)reader["Staff_Id"], (DateTime)reader["Created_At"]);
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return lastOrder;
         }
@@ -249,7 +274,10 @@ namespace DataLayer
                     tables.Add(new TableDTO((int)reader["Id"], (string)reader["Name"]));
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return tables;
         }
@@ -274,7 +302,10 @@ namespace DataLayer
                     nonSeatedTables.Add(new TableDTO((int)reader["Table_Id"], (string)reader["Table_Name"]));
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             try
             {
@@ -293,7 +324,10 @@ namespace DataLayer
                     nonSeatedTables.Add(new TableDTO((int)reader["Id"], (string)reader["Name"]));
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return nonSeatedTables;
         }
@@ -317,7 +351,10 @@ namespace DataLayer
                     tables.Add(new TableDTO((int)reader["Table_Id"], (string)reader["Table_Name"], (DateTime)reader["Time_Arrived"]));
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return tables;
         }
@@ -339,8 +376,9 @@ namespace DataLayer
                     table = new TableDTO((int)reader["Id"], (string)reader["Name"]);
                 }
             }
-            catch (Exception e) {
-                throw new Exception(e.Message);
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
             }
             finally { CloseCon(); }
             return table;
@@ -366,7 +404,10 @@ namespace DataLayer
                     succeeded = false;
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return succeeded;
         }
@@ -385,7 +426,10 @@ namespace DataLayer
                 if (DbCom.ExecuteNonQuery() > 0) succeeded = true; else succeeded = false;
 
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return succeeded;
         }
@@ -411,7 +455,10 @@ namespace DataLayer
                     table = new TableDTO((int)reader["Id"], (string)reader["Name"]);
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             try
             {
@@ -434,7 +481,10 @@ namespace DataLayer
                     }
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return succeeded;
         }
@@ -464,7 +514,10 @@ namespace DataLayer
                     SeatedTableId = (int)reader["Id"];
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             try
             {
@@ -487,7 +540,10 @@ namespace DataLayer
                     }
                 }
             }
-            catch (Exception e) { }
+            catch (SqlException e)
+            {
+                throw new Exception("Something went wrong with our server, please try again in a few seconds!");
+            }
             finally { CloseCon(); }
             return succeeded;
         }

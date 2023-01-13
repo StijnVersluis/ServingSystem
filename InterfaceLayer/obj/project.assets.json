@@ -1119,11 +1119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
+      "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
       "projectName": "InterfaceLayer",
-      "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
+      "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
       "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\obj\\",
+      "outputPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

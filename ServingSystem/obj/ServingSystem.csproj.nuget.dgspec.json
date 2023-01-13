@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\ServingSystem.csproj": {}
+    "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\ServingSystem\\ServingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj": {
+    "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj",
+        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\DataLayer.csproj",
         "projectName": "DataLayer",
-        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj",
+        "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\DataLayer.csproj",
         "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\obj\\",
+        "outputPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -32,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
-                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj"
+              "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
+                "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj"
               }
             }
           }
@@ -77,14 +77,14 @@
         }
       }
     },
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
+    "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
+        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
         "projectName": "InterfaceLayer",
-        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
+        "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj",
         "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\obj\\",
+        "outputPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -142,14 +142,14 @@
         }
       }
     },
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
+    "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
+        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
         "projectName": "LogicLayer",
-        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
+        "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\LogicLayer.csproj",
         "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\obj\\",
+        "outputPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -170,8 +170,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
-                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj"
+              "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj": {
+                "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\InterfaceLayer\\InterfaceLayer.csproj"
               }
             }
           }
@@ -211,14 +211,14 @@
         }
       }
     },
-    "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\ServingSystem.csproj": {
+    "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\ServingSystem\\ServingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\ServingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\ServingSystem\\ServingSystem.csproj",
         "projectName": "ServingSystem",
-        "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\ServingSystem.csproj",
+        "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\ServingSystem\\ServingSystem.csproj",
         "packagesPath": "C:\\Users\\stijn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\ServingSystem\\obj\\",
+        "outputPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\ServingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -239,11 +239,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj": {
-                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\DataLayer\\DataLayer.csproj"
+              "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\DataLayer.csproj": {
+                "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\DataLayer\\DataLayer.csproj"
               },
-              "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
-                "projectPath": "C:\\Users\\stijn\\source\\repos\\ServingSystem\\LogicLayer\\LogicLayer.csproj"
+              "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\LogicLayer.csproj": {
+                "projectPath": "C:\\Users\\stijn\\source\\repos\\Stijn_Versluis_Semester_2\\ServingSystem\\LogicLayer\\LogicLayer.csproj"
               }
             }
           }

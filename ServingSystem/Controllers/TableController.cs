@@ -16,53 +16,82 @@ namespace ServingSystem.Controllers
     {
         private static readonly TableDAL tDAL = new();
         private static readonly OrderDAL oDAL = new();
-        private readonly TableContainer tableContainer = new (tDAL);
-        private readonly ProductContainer productContainer = new (new ProductDAL());
+        private readonly TableContainer tableContainer = new(tDAL);
+        private readonly ProductContainer productContainer = new(new ProductDAL());
         private readonly StaffContainer userContainer = new(new StaffDAL());
 
         // GET: TableController/Details/5
-        public ActionResult Details(int id, string ?error)
+        public ActionResult Details(int id, string? error)
         {
-            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
-
-            Table table = tableContainer.GetTable(id);
-            var openOrder = table.GetOpenOrder(tDAL);
-            if (openOrder != null)
+            try
             {
-                ViewData["OpenOrder"] = new OrderViewModel(openOrder, openOrder.GetProducts(oDAL));
+                if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+
+                Table table = tableContainer.GetTable(id);
+                var openOrder = table.GetOpenOrder(tDAL);
+                if (openOrder != null)
+                {
+                    ViewData["OpenOrder"] = new OrderViewModel(openOrder, openOrder.GetProducts(oDAL));
+                }
+                ViewData["Error"] = error;
+                ViewData["Products"] = productContainer.GetAll().ConvertAll(x => new ProductViewModel(x));
+                ViewData["AllOrders"] = table.GetOrders(tDAL).ConvertAll(x => new OrderViewModel(x, x.GetProducts(oDAL)));
+                ViewData["TotalPrice"] = table.GetTotalPrice(tDAL);
+                return View(new TableViewModel(table, table.Time_Arrived));
             }
-            ViewData["Error"] = error;
-            ViewData["Products"] = productContainer.GetAll().ConvertAll(x => new ProductViewModel(x));
-            ViewData["AllOrders"] = table.GetOrders(tDAL).ConvertAll(x => new OrderViewModel(x, x.GetProducts(oDAL)));
-            ViewData["TotalPrice"] = table.GetTotalPrice(tDAL);
-            return View(new TableViewModel(table, table.Time_Arrived));
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Home", new { error = "Something went wrong, try again in a few seconds." });
+            }
         }
 
         public ActionResult CloseTable(int id)
         {
-            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
-            var order = tableContainer.GetTable(id).GetOpenOrder(tDAL);
-            if (order == null) {
-                tableContainer.CloseTable(id);
-                return RedirectToAction("Index", "Home");
-            } else
+            try
             {
-                return RedirectToAction("Details", "Table", new { id = id, error = "Please Save or Remove last order!" });
+                if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+                var order = tableContainer.GetTable(id).GetOpenOrder(tDAL);
+                if (order == null)
+                {
+                    tableContainer.CloseTable(id);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Table", new { id = id, error = "Please Save or Remove last order!" });
+                }
+            } catch(Exception e)
+            {
+                return RedirectToAction("Details", "Table", new { id = id, error = "Something went wrong, try again in a few second." });
             }
         }
 
         public ActionResult CreateOrder(int id)
         {
-            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
-            tableContainer.GetTable(id).CreateOrder(tDAL, (int)HttpContext.Session.GetInt32("UserId"));
-            return RedirectToAction(nameof(Details), new { id });
+            try
+            {
+                if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+                tableContainer.GetTable(id).CreateOrder(tDAL, (int)HttpContext.Session.GetInt32("UserId"));
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Details", new { id = id, error = "Something went wrong, try again in a few seconds." });
+            }
         }
 
         public ActionResult RemoveOrder(int id)
         {
-            if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
-            tableContainer.GetTable(id).RemoveOrder(tDAL);
-            return RedirectToAction(nameof(Details), new { id });
+            try
+            {
+                if (!IsLoggedIn()) return RedirectToAction("Login", "Home");
+                tableContainer.GetTable(id).RemoveOrder(tDAL);
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Details", new { id = id, error = "Something went wrong, try again in a few seconds." });
+            }
         }
 
         // GET: TableController/Create
