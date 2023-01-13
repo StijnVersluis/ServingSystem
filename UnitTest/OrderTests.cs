@@ -19,10 +19,12 @@ namespace UnitTest
         [TestMethod]
         public void ConstructorTest()
         {
+            //Arrange
             var date = DateTime.Now;
             var order = new Order(1, 1, 1, date);
             var orderRule = new OrderRule(1, 1, 1, 2, 2.99);
 
+            //Assert
             Assert.AreEqual(1, order.Id);
             Assert.AreEqual(1, order.SeatedTableId);
             Assert.AreEqual(1, order.StaffId);
@@ -37,45 +39,54 @@ namespace UnitTest
         [TestMethod]
         public void GetProductsTest()
         {
+            //Arrange
             var stub = new OrderSTUB();
             var orderId = 1;
 
             var order = new Order(stub.orders.Find(order => order.Id == orderId));
 
+            //Act
             var products = order.GetProducts(stub);
+
+            //Assert
             Assert.AreEqual(stub.orderRules.Where(rule => rule.OrderId == orderId).Count(), products.Count);
         }
 
         [TestMethod]
         public void AddProductTest()
         {
+            //Arrange
             var stub = new OrderSTUB();
 
             var order = new Order(stub.orders[0]);
             int productId = 1;
             OrderRule oldRule = new OrderRule(stub.orderRules.Where(rule => rule.OrderId == order.Id && rule.ProductId == productId).ToList().First());
 
+            //Act
             order.AddProduct(stub, new Product(productId, "", 5, 1));
 
             OrderRule newRule = new OrderRule(stub.orderRules.Where(rule => rule.OrderId == order.Id && rule.ProductId == productId).ToList().First());
 
+            //Assert
             Assert.AreEqual(oldRule.Amount + 1, newRule.Amount);
         }
 
         [TestMethod]
         public void RemoveProductTest()
         {
+            //Arrange
             var stub = new OrderSTUB();
 
             var order = new Order(stub.orders[0]);
             int productId = 1;
             OrderRule oldRule = new OrderRule(stub.orderRules.Where(rule => rule.OrderId == order.Id && rule.ProductId == productId).ToList().First());
 
+            //Act
             order.RemoveProduct(stub, productId);
 
             OrderRule newRule = new OrderRule(stub.orderRules.Where(rule => rule.OrderId == order.Id && rule.ProductId == productId).ToList().First());
 
-
+            //Assert
             Assert.AreEqual(oldRule.Amount - 1, newRule.Amount);
         }
     }
